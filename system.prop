@@ -41,6 +41,7 @@ camera2.portability.force_api=1
 camera.cts.test=0
 media.stagefright.legacyencoder=true
 media.stagefright.less-secure=true
+persist.media.treble_omx=false
 
 # Display & Graphics
 ro.sf.lcd_density=480
