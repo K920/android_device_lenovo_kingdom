@@ -93,8 +93,8 @@ PRODUCT_AAPT_PREF_CONFIG := xxhdpi
 PRODUCT_AAPT_PREBUILT_DPI := xxhdpi xhdpi hdpi
 
 # Doze
-PRODUCT_PACKAGES += \
-    LenovoDoze
+#PRODUCT_PACKAGES += \
+#    LenovoDoze
 
 # DRM
 PRODUCT_PACKAGES += \
@@ -105,8 +105,8 @@ PRODUCT_PACKAGES += \
     setup_fs
 
 # FlipFlap
-PRODUCT_PACKAGES += \
-    FlipFlap
+#PRODUCT_PACKAGES += \
+#    FlipFlap
 
 # FM
 PRODUCT_PACKAGES += \
