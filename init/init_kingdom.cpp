@@ -68,7 +68,7 @@ static int read_file2(const char *fname, char *data, int max_size)
 
     fd = open(fname, O_RDONLY);
     if (fd < 0) {
-        ERROR("%s: Failed to open '%s'\n", LOG_TAG, fname);
+        LOG(ERROR) << LOG_TAG << ": Failed to open '" << fname << "'\n";
         return 0;
     }
 
@@ -92,18 +92,17 @@ void vendor_load_properties()
 
     while (retry && (!rc || strlen(hwid) == 0)) {
         retry--;
-        ERROR("%s: Waiting for nv_hwid...\n", LOG_TAG);
+        LOG(ERROR) << LOG_TAG << ": Waiting for nv_hwid...\n";
         usleep(RETRY_MS * 1000);
         rc = read_file2(HWID_PATH, hwid, HWID_SIZE + 1);
     }
 
     if (!retry) {
-        ERROR("%s: Failed to read hwid [%s], defaulting to ROW variant\n",
-                LOG_TAG, hwid);
+        LOG(ERROR) << LOG_TAG << ": Failed to read hwid [" << hwid << "], defaulting to ROW variant\n";
         goto set_variant_row;
     }
 
-    ERROR("%s: Found hwid [%s]\n", LOG_TAG, hwid);
+    LOG(ERROR) << LOG_TAG << ": Found hwid [" << hwid << "]\n";
 
     if (strncmp(hwid, "0001", HWID_SIZE) == 0) {
         /* China */
@@ -131,8 +130,7 @@ set_variant_row:
             "Lenovo/kingdom_row/kingdom_row:5.0.2/LRX22G/K920_S288_160224_ROW:user/release-keys");
 
     } else {
-        ERROR("%s: Unknown hwid [%s], defaulting to ROW variant\n",
-                LOG_TAG, hwid);
+        LOG(ERROR) << LOG_TAG << ": Unknown hwid [" << hwid << "], defaulting to ROW variant\n";
         goto set_variant_row;
     }
 
@@ -143,7 +141,6 @@ set_variant_row:
     // LTE+3G+2G on both SIMs
     property_set("ro.telephony.default_network", "9,9");
 
-    ERROR("%s: Setting build properties for [%s] device\n",
-            LOG_TAG, device);
+    LOG(ERROR) << LOG_TAG << ": Setting build properties for [" << device << "] device\n";
 }
 
