@@ -28,25 +28,25 @@
  */
 
 #include <stdlib.h>
-#include <unistd.h>
 #include <fcntl.h>
+
 #define _REALLY_INCLUDE_SYS__SYSTEM_PROPERTIES_H_
 #include <sys/_system_properties.h>
 
 #include "vendor_init.h"
 #include "property_service.h"
 #include "log.h"
-#include "util.h"
 
 #define LOG_TAG         "init_kingdom"
 
 #define HWID_PATH       "/sys/class/lenovo/nv/nv_hwid"
-#define HWID_SIZE       4
+#define HWID_SIZE_MAX   8
 
-#define RETRY_MS	500
-#define RETRY_COUNT	20
+#define RETRY_MS        500
+#define RETRY_COUNT     20
 
-#define PROP_SIZE	64
+#define PROP_SIZE_MAX   64
+
 
 void property_override(char const prop[], char const value[])
 {
@@ -68,7 +68,7 @@ static int read_file2(const char *fname, char *data, int max_size)
 
     fd = open(fname, O_RDONLY);
     if (fd < 0) {
-        ERROR("%s: Failed to open '%s'\n", LOG_TAG, fname);
+        LOG(ERROR) << LOG_TAG << ": Failed to open '" << fname << "'";
         return 0;
     }
 
@@ -84,30 +84,29 @@ static int read_file2(const char *fname, char *data, int max_size)
 
 void vendor_load_properties()
 {
-    char hwid[HWID_SIZE];
-    char device[PROP_SIZE];
+    char hwid[HWID_SIZE_MAX];
+    char device[PROP_SIZE_MAX];
 
     int retry = RETRY_COUNT;
-    int rc = read_file2(HWID_PATH, hwid, HWID_SIZE + 1);
+    int rc = read_file2(HWID_PATH, hwid, HWID_SIZE_MAX);
 
     while (retry && (!rc || strlen(hwid) == 0)) {
         retry--;
-        ERROR("%s: Waiting for nv_hwid...\n", LOG_TAG);
+        LOG(INFO) << LOG_TAG << ": Waiting for nv_hwid...";
         usleep(RETRY_MS * 1000);
-        rc = read_file2(HWID_PATH, hwid, HWID_SIZE + 1);
+        rc = read_file2(HWID_PATH, hwid, HWID_SIZE_MAX);
     }
 
     if (!retry) {
-        ERROR("%s: Failed to read hwid [%s], defaulting to ROW variant\n",
-                LOG_TAG, hwid);
+        LOG(ERROR) << LOG_TAG << ": Failed to read hwid";
         goto set_variant_row;
     }
 
-    ERROR("%s: Found hwid [%s]\n", LOG_TAG, hwid);
+    LOG(INFO) << LOG_TAG << ": Found hwid=" << hwid;
 
-    if (strncmp(hwid, "0001", HWID_SIZE) == 0) {
+    if (strncmp(hwid, "0001", 4) == 0) {
         /* China */
-        strncpy(device, "kingdomt", PROP_SIZE);
+        strncpy(device, "kingdomt", PROP_SIZE_MAX);
         property_override("ro.product.model", "K920 (CN)");
 
         property_set("persist.radio.multisim.config", "dsda");
@@ -117,10 +116,10 @@ void vendor_load_properties()
         property_override("ro.build.fingerprint",
             "Lenovo/kingdomt/kingdomt:5.0.2/LRX22G/VIBEUI_V2.5_1627_5.1894.1_ST_K920:user/release-keys");
 
-    } else if (strncmp(hwid, "0100", HWID_SIZE) == 0) {
+    } else if (strncmp(hwid, "0100", 4) == 0) {
 set_variant_row:
         /* Rest of the World */
-        strncpy(device, "kingdom_row", PROP_SIZE);
+        strncpy(device, "kingdom_row", PROP_SIZE_MAX);
         property_override("ro.product.model", "K920 (ROW)");
 
         property_set("persist.radio.multisim.config", "dsds");
@@ -131,8 +130,7 @@ set_variant_row:
             "Lenovo/kingdom_row/kingdom_row:5.0.2/LRX22G/K920_S288_160224_ROW:user/release-keys");
 
     } else {
-        ERROR("%s: Unknown hwid [%s], defaulting to ROW variant\n",
-                LOG_TAG, hwid);
+        LOG(ERROR) << LOG_TAG << ": Unknown hwid=" << hwid;
         goto set_variant_row;
     }
 
@@ -143,7 +141,6 @@ set_variant_row:
     // LTE+3G+2G on both SIMs
     property_set("ro.telephony.default_network", "9,9");
 
-    ERROR("%s: Setting build properties for [%s] device\n",
-            LOG_TAG, device);
+    LOG(INFO) << LOG_TAG << ": Build properties set for " << device << " device";
 }
 
