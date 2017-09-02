@@ -70,9 +70,9 @@ TARGET_SCREEN_HEIGHT := 2560
 TARGET_SCREEN_WIDTH := 1440
 
 # Camera
-PRODUCT_PACKAGES += \
-    camera.msm8974 \
-    Snap
+#PRODUCT_PACKAGES += \
+#    camera.msm8974 \
+#    Snap
 
 # Dalvik/HWUI
 PRODUCT_PROPERTY_OVERRIDES += \
