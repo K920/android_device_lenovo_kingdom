@@ -210,7 +210,7 @@ PRODUCT_COPY_FILES += \
 
 PRODUCT_PACKAGES += \
     android.hardware.nfc@1.0-impl \
-    nfc_nci.pn54x.default \
+    nfc_nci.kingdom \
     com.android.nfc_extras \
     NfcNci \
     Tag
