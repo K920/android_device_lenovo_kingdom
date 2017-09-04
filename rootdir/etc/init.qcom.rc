@@ -34,12 +34,6 @@ on fs
 
     mount_all ./fstab.qcom
 
-    # HACK: In order to successfully read nv_hwid from NV
-    # during vendor_load_properties() we need to start adsp
-    # with rmt_storage service sooner
-    write /sys/kernel/boot_adsp/boot 1
-    start rmt_storage
-
     restorecon_recursive /persist
     mkdir /persist/data 0700 system system
 
@@ -106,6 +100,12 @@ on post-fs-data
     # Create PERFD deamon related dirs
     mkdir /data/misc/perfd 02755 root system
     mkdir /data/system/perfd 02770 root system
+
+    # HACK: In order to successfully read nv_hwid from NV
+    # during vendor_load_properties() we need to start adsp
+    # with rmt_storage service sooner
+    #write /sys/kernel/boot_adsp/boot 1
+    #start rmt_storage
 
     setprop vold.post_fs_data_done 1
 
