@@ -174,6 +174,9 @@ TARGET_RECOVERY_FSTAB := $(DEVICE_PATH)/rootdir/etc/fstab.qcom
 # Snapdragon LLVM
 TARGET_USE_SDCLANG := true
 
+# USB
+TARGET_USES_LEGACY_ADB_INTERFACE := true
+
 # Wifi
 BOARD_HAS_QCOM_WLAN              := true
 BOARD_HAS_QCOM_WLAN_SDK          := true
