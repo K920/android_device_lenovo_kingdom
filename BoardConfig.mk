@@ -42,12 +42,14 @@ TARGET_CPU_SMP := true
 ARCH_ARM_HAVE_TLS_REGISTER := true
 
 # Kernel
+BOARD_KERNEL_IMAGE_NAME := zImage
 BOARD_KERNEL_BASE := 0x00000000
 BOARD_KERNEL_PAGESIZE := 2048
 BOARD_KERNEL_CMDLINE := androidboot.hardware=qcom \
 			androidboot.bootdevice=msm_sdcc.1 \
 			ehci-hcd.park=3 \
 			androidboot.selinux=permissive
+BOARD_KERNEL_CMDLINE += androidboot.configfs=true
 BOARD_KERNEL_SEPARATED_DT := true
 BOARD_MKBOOTIMG_ARGS := --ramdisk_offset 0x02000000 --tags_offset 0x01e00000
 BOARD_DTBTOOL_ARGS := -2
@@ -86,9 +88,9 @@ GREEN_LED_PATH := "/sys/class/leds/led:rgb_green/brightness"
 BLUE_LED_PATH := "/sys/class/leds/led:rgb_blue/brightness"
 BLINK_PATH := "/sys/class/leds/led:rgb_red/blink"
 
-# CM Hardware
+# Lineage Hardware
 BOARD_HARDWARE_CLASS := \
-    $(DEVICE_PATH)/cmhw
+    $(DEVICE_PATH)/lineagehw
 
 # DT2W
 TARGET_TAP_TO_WAKE_NODE := "/sys/class/touchscreen/device/gesture"
@@ -101,7 +103,7 @@ BOARD_FLASH_BLOCK_SIZE                  := 131072
 BOARD_BOOTIMAGE_PARTITION_SIZE          := 20971520
 BOARD_RECOVERYIMAGE_PARTITION_SIZE      := 20971520
 BOARD_CACHEIMAGE_FILE_SYSTEM_TYPE       := ext4
-BOARD_CACHEIMAGE_PARTITION_SIZE         := 134217728
+BOARD_CACHEIMAGE_PARTITION_SIZE         := 268435456
 BOARD_PERSISTIMAGE_FILE_SYSTEM_TYPE     := ext4
 BOARD_PERSISTIMAGE_PARTITION_SIZE       := 33554432
 BOARD_SYSTEMIMAGE_PARTITION_SIZE        := 2147483648
@@ -157,9 +159,10 @@ TARGET_PROVIDES_LIBLIGHT := true
 # NFC
 BOARD_NFC_CHIPSET := pn547
 BOARD_NFC_DEVICE := /dev/pn547
+BOARD_NFC_HAL_SUFFIX := msm8974
 
 # QCOM hardware
-#BOARD_USES_QCOM_HARDWARE := true
+BOARD_USES_QCOM_HARDWARE := true
 
 # Radio
 TARGET_RIL_VARIANT := caf
