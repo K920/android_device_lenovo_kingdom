@@ -147,14 +147,14 @@ $(WV_SYMLINKS): $(LOCAL_INSTALLED_MODULE)
 
 ALL_DEFAULT_INSTALLED_MODULES += $(WV_SYMLINKS)
 
-WCNSS_CFG_SYMLINK := $(TARGET_OUT_VENDOR)/firmware/wlan/prima/WCNSS_qcom_cfg.ini
-$(WCNSS_CFG_SYMLINK): $(LOCAL_INSTALLED_MODULE)
-	@echo "WCNSS cfg link: $@"
+WCNSS_CONFIG_SYMLINK := $(TARGET_OUT_VENDOR)/firmware/wlan/prima/WCNSS_qcom_cfg.ini
+$(WCNSS_CONFIG_SYMLINK): $(LOCAL_INSTALLED_MODULE)
+	@echo "WCNSS config link: $@"
 	@mkdir -p $(dir $@)
 	@rm -rf $@
 	$(hide) ln -sf /data/misc/wifi/$(notdir $@) $@
 
-ALL_DEFAULT_INSTALLED_MODULES += $(WCNSS_CFG_SYMLINK)
+ALL_DEFAULT_INSTALLED_MODULES += $(WCNSS_CONFIG_SYMLINK)
 
 # Create links for audcal data files
 $(shell mkdir -p $(TARGET_OUT)/etc/firmware/wcd9320; \
