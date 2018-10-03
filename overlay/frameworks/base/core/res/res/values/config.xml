@@ -18,7 +18,6 @@
 -->
 
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-
     <!-- Boolean indicating whether the wifi chipset has dual frequency band support -->
     <bool translatable="false" name="config_wifi_dual_band_support">true</bool>
 
@@ -369,7 +368,4 @@
         <item>"/system/framework/arm/boot.oat"</item>
         <item>"/system/framework/arm/boot-core-libart.oat"</item>
     </string-array>
-
-    <!-- Keep chosen default camera app pinned in memory for faster launching -->
-    <bool name="config_pinnerCameraApp">true</bool>
 </resources>
