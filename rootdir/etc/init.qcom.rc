@@ -37,6 +37,32 @@ on early-boot
     setrlimit 8 67108864 67108864
     write /sys/kernel/boot_adsp/boot 1
 
+on fs
+    wait /dev/block/platform/${ro.boot.bootdevice}
+    symlink /dev/block/platform/${ro.boot.bootdevice} /dev/block/bootdevice
+
+    mount_all ./system/vendor/etc/fstab.qcom
+
+    # HACK: In order to successfully read nv_hwid from NV
+    # during vendor_load_properties() we need to start adsp
+    # with rmt_storage service sooner
+    write /sys/kernel/boot_adsp/boot 1
+    start rmt_storage
+
+    mkdir /dev/usb-ffs 0770 shell shell
+    mkdir /dev/usb-ffs/adb 0770 shell shell
+    mount functionfs adb /dev/usb-ffs/adb uid=2000,gid=2000
+    write /sys/class/android_usb/android0/f_ffs/aliases adb
+    mkdir /dev/bus 0755 root root
+    mkdir /dev/bus/usb 0755 root root
+
+    restorecon_recursive   /persist
+    mkdir /persist/data 0700 system system
+    mkdir /persist/data/sfs 0700 system system
+    mkdir /persist/data/tz 0700 system system
+
+    mount ext4 /dev/block/bootdevice/by-name/mrd /oem ro nosuid nodev context=u:object_r:oemfs:s0
+
 on boot
     # Bluetooth
     chown bluetooth bluetooth /sys/module/bluetooth_power/parameters/power
@@ -233,32 +259,6 @@ on post-fs-data
     chown radio radio /data/misc/radio/qcril.db
     chmod 700 /data/misc/radio/qcril.db
 
-on fs
-    wait /dev/block/platform/${ro.boot.bootdevice}
-    symlink /dev/block/platform/${ro.boot.bootdevice} /dev/block/bootdevice
-
-    mount_all ./system/vendor/etc/fstab.qcom
-
-    # HACK: In order to successfully read nv_hwid from NV
-    # during vendor_load_properties() we need to start adsp
-    # with rmt_storage service sooner
-    write /sys/kernel/boot_adsp/boot 1
-    start rmt_storage
-
-    mkdir /dev/usb-ffs 0770 shell shell
-    mkdir /dev/usb-ffs/adb 0770 shell shell
-    mount functionfs adb /dev/usb-ffs/adb uid=2000,gid=2000
-    write /sys/class/android_usb/android0/f_ffs/aliases adb
-    mkdir /dev/bus 0755 root root
-    mkdir /dev/bus/usb 0755 root root
-
-    restorecon_recursive   /persist
-    mkdir /persist/data 0700 system system
-    mkdir /persist/data/sfs 0700 system system
-    mkdir /persist/data/tz 0700 system system
-
-    mount ext4 /dev/block/bootdevice/by-name/mrd /oem ro nosuid nodev context=u:object_r:oemfs:s0
-
 service rmt_storage /vendor/bin/rmt_storage
     class core
     user root
@@ -326,6 +326,17 @@ service charger /charger
     critical
     seclabel u:r:charger:s0
 
+service hvdcp /system/vendor/bin/hvdcp
+    class core
+    user root
+    disabled
+
+on property:persist.usb.hvdcp.detect=true
+    start hvdcp
+
+on property:persist.usb.hvdcp.detect=false
+    stop hvdcp
+
 service qcamerasvr /vendor/bin/mm-qcamera-daemon
     class late_start
     user camera
@@ -374,15 +385,22 @@ service adsprpcd /vendor/bin/adsprpcd
 service wcnss-service /vendor/bin/wcnss_service
     class main
     user system
-    group system wifi diag radio oem_2950
+    group system wifi oem_2950 radio
     oneshot
 
-service ril-daemon2 /vendor/bin/hw/rild -c 2
+service ppd /system/vendor/bin/mm-pp-daemon
+    class late_start
+    disabled
+    user system
+    socket pps stream 0660 system system
+    group system graphics
+
+service ril-daemon1 /vendor/bin/hw/rild -c 2
     class main
     user radio
     group radio cache inet misc audio log readproc wakelock sdcard_r sdcard_rw diag oem_2950
     capabilities BLOCK_SUSPEND NET_ADMIN NET_RAW
 
-service fuse_usbdisk /system/vendor/bin/sdcard -u 1023 -g 1023 -w 1023 -d /mnt/media_rw/usbdisk /storage/usbdisk
+service fuse_usbdisk /system/bin/sdcard -u 1023 -g 1023 -w 1023 -d /mnt/media_rw/usbdisk /storage/usbdisk
     class late_start
     disabled
