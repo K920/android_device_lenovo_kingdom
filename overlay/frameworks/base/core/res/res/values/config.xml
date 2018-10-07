@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+ <?xml version="1.0" encoding="utf-8"?>
 <!--
 /*
 ** Copyright 2013, The Android Open Source Project
@@ -359,13 +359,5 @@
         <item>SUPL_PORT=7275</item>
         <item>SUPL_MODE=1</item>
         <item>LPP_PROFILE=0</item>
-    </string-array>
-
-    <!-- Default list of files pinned by the Pinner Service -->
-    <string-array translatable="false" name="config_defaultPinnerServiceFiles">
-        <item>"/system/framework/arm/boot-framework.oat"</item>
-        <item>"/system/framework/oat/arm/services.odex"</item>
-        <item>"/system/framework/arm/boot.oat"</item>
-        <item>"/system/framework/arm/boot-core-libart.oat"</item>
     </string-array>
 </resources>
