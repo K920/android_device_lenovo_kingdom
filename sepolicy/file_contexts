@@ -1,0 +1,41 @@
+# Sensors
+/persist/sns.reg                                u:object_r:sensors_persist_file:s0
+
+# NXP Amplifier
+/dev/tfa9890                                    u:object_r:audio_device:s0
+
+# Touch Panel
+/sys/devices/virtual/touch/tp_dev/key_enable    u:object_r:touchpanel_sysfs:s0
+/sys/devices/gpio_keys.83/disabled_keys         u:object_r:touchpanel_sysfs:s0
+/sys/devices/virtual/touch/tp_dev/key_reverse   u:object_r:touchpanel_sysfs:s0
+/sys/devices/virtual/touch/tp_dev/gesture_on    u:object_r:touchpanel_sysfs:s0
+
+/sys/class/touchscreen/device/gesture u:object_r:touchpanel_sysfs:s0
+
+# HALS
+#/(vendor|system/vendor)/bin/hw/android\.hardware\.power@1\.0-service.kingdom     u:object_r:hal_power_default_exec:s0
+/(vendor|system/vendor)/bin/hw/android\.hardware\.light@2\.0-service.kingdom     u:object_r:hal_light_default_exec:s0
+
+# Lights
+/sys/devices/mdp\.0/qcom,mdss_fb_primary\.169/leds/lcd-backlight(/.*)?   u:object_r:sysfs_leds:s0
+/sys/devices/leds-qpnp-shenqi-k9-24/leds/led:rgb_red(/.*)?               u:object_r:sysfs_leds:s0
+/sys/devices/leds-qpnp-shenqi-k9-24/leds/led:rgb_green(/.*)?             u:object_r:sysfs_leds:s0
+/sys/devices/leds-qpnp-shenqi-k9-24/leds/led:rgb_blue(/.*)?              u:object_r:sysfs_leds:s0
+/sys/devices/leds-qpnp-shenqi-k9-24/leds/rgb(/.*)?                       u:object_r:sysfs_leds:s0
+/sys/devices/leds-qpnp-shenqi-k9-27/leds/button-backlight(/.*)?          u:object_r:sysfs_leds:s0
+/sys/devices/leds-qpnp-shenqi-k9-27/leds/button-backlight2(/.*)?         u:object_r:sysfs_leds:s0
+
+/sys/class/leds/lcd-backlight/brightness u:object_r:sysfs_leds:s0
+
+# Fingerprint
+#/persist/fingerprintapp(/.*)?                                      u:object_r:fingerprint_persist_file:s0
+#/sys/devices/f9927000.spi/spi_master/spi4/spi4.0/setup/enable_navi u:object_r:fingerprint_sysfs:s0
+#/sys/devices/f9927000.spi/spi_master/spi4/spi4.0/setup/irq         u:object_r:fingerprint_sysfs:s0
+#/sys/devices/f9927000.spi/spi_master/spi4/spi4.0/setup/key         u:object_r:fingerprint_sysfs:s0
+#/sys/devices/f9927000.spi/spi_master/spi4/spi4.0/setup/wakeup      u:object_r:fingerprint_sysfs:s0
+#/sys/devices/f9927000.spi/spi_master/spi4/spi4.0/setup/hw_reset    u:object_r:fingerprint_sysfs:s0
+
+#/dev/fpc1020                                                       u:object_r:fingerprint_device:s0
+
+# FRP
+/dev/block/platform/msm_sdcc.1/by-name/frp               u:object_r:frp_block_device:s0
