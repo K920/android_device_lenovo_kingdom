@@ -27,6 +27,10 @@
 
 /sys/class/leds/lcd-backlight/brightness u:object_r:sysfs_leds:s0
 
+# NFC
+/dev/pn547                                           u:object_r:nfc_device:s0
+/dev/sec-nfc                                         u:object_r:nfc_device:s0
+
 # Fingerprint
 #/persist/fingerprintapp(/.*)?                                      u:object_r:fingerprint_persist_file:s0
 #/sys/devices/f9927000.spi/spi_master/spi4/spi4.0/setup/enable_navi u:object_r:fingerprint_sysfs:s0
