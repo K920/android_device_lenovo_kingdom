@@ -2,6 +2,7 @@
 #include <Tfa98xx_Registers.h>
 #include <assert.h>
 #include <string.h>
+#include <errno.h>
 #ifdef WIN32
 #include <windows.h>
 #else

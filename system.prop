@@ -5,24 +5,24 @@
 # Audio
 mm.enable.smoothstreaming=true
 mm.enable.qcom_parser=37491
-ro.qc.sdk.audio.fluencetype=fluence
-persist.audio.fluence.voicecall=true
-persist.audio.fluence.voicerec=false
-persist.audio.fluence.speaker=false
-audio.offload.buffer.size.kb=32
+ro.vendor.qc.sdk.audio.fluencetype=fluence
+persist.vendor.audio.fluence.voicecall=true
+persist.vendor.audio.fluence.voicerec=false
+persist.vendor.audio.fluence.speaker=false
+vendor.audio.offload.buffer.size.kb=32
 av.offload.enable=true
 av.streaming.offload.enable=true
-audio.offload.multiple.enabled=false
-audio.offload.gapless.enabled=true
-tunnel.audio.encode=true
+vendor.audio.offload.multiple.enabled=false
+vendor.audio.offload.gapless.enabled=true
+vendor.tunnel.audio.encode=true
 media.aac_51_output_enabled=true
 audio.offload.pcm.16bit.enable=true
 audio.offload.pcm.24bit.enable=true
-use.dedicated.device.for.voip=true
+vendor.dedicated.device.for.voip=true
 
 # Bluetooth
 bluetooth.hfp.client=1
-qcom.bluetooth.soc=smd
+vendor.qcom.bluetooth.soc=smd
 ro.bluetooth.hfp.ver=1.7
 ro.qualcomm.bt.hci_transport=smd
 

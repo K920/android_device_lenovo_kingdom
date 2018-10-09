@@ -61,13 +61,20 @@ TARGET_KERNEL_CONFIG := lineageos_k920_defconfig
 BOARD_ANT_WIRELESS_DEVICE := "vfs-prerelease"
 
 # Audio
-USE_CUSTOM_AUDIO_POLICY := 1
-USE_XML_AUDIO_POLICY_CONF := 1
-BOARD_USES_ALSA_AUDIO := true
-AUDIO_FEATURE_ENABLED_MULTI_VOICE_SESSIONS := true
+AUDIO_FEATURE_ENABLED_EXTN_FORMATS := true
+AUDIO_FEATURE_ENABLED_EXTN_POST_PROC := true
+AUDIO_FEATURE_ENABLED_FLUENCE := true
+AUDIO_FEATURE_ENABLED_HFP := true
 AUDIO_FEATURE_ENABLED_HWDEP_CAL := true
 AUDIO_FEATURE_ENABLED_LOW_LATENCY_CAPTURE := true
+AUDIO_FEATURE_ENABLED_MULTI_VOICE_SESSIONS := true
+AUDIO_FEATURE_ENABLED_NEW_SAMPLE_RATE := true
+AUDIO_FEATURE_ENABLED_PROXY_DEVICE := true
 AUDIO_FEATURE_LOW_LATENCY_PRIMARY := true
+BOARD_USES_ALSA_AUDIO := true
+USE_XML_AUDIO_POLICY_CONF := 1
+USE_CUSTOM_AUDIO_POLICY := 1
+
 
 # Binder
 TARGET_USES_64_BIT_BINDER := true
@@ -83,6 +90,8 @@ BOARD_CUSTOM_BT_CONFIG := $(DEVICE_PATH)/bluetooth/vnd_kingdom.txt
 # Camera
 TARGET_USE_VENDOR_CAMERA_EXT := true
 USE_DEVICE_SPECIFIC_CAMERA := true
+TARGET_PROCESS_SDK_VERSION_OVERRIDE := \
+    /system/vendor/bin/mm-qcamera-daemon=23
 
 # Charger
 BOARD_CHARGER_ENABLE_SUSPEND := true
@@ -94,9 +103,7 @@ BLUE_LED_PATH := "/sys/class/leds/led:rgb_blue/brightness"
 BLINK_PATH := "/sys/class/leds/led:rgb_red/blink"
 
 # Lineage Hardware
-BOARD_HARDWARE_CLASS := \
-    hardware/lineage/lineagehw \
-    $(DEVICE_PATH)/lineagehw
+JAVA_SOURCE_OVERLAYS := org.lineageos.hardware|$(DEVICE_PATH)/lineagehw|**/*.java
 
 # Tap to wake
 TARGET_TAP_TO_WAKE_NODE := "/sys/class/touchscreen/device/gesture"
@@ -147,6 +154,7 @@ TARGET_PROVIDES_GPS_LOC_API := true
 USE_OPENGL_RENDERER := true
 TARGET_CONTINUOUS_SPLASH_ENABLED := true
 TARGET_USES_ION := true
+TARGET_ADDITIONAL_GRALLOC_10_USAGE_BITS := 0x02000000U
 OVERRIDE_RS_DRIVER := libRSDriver_adreno.so
 HAVE_ADRENO_SOURCE:= false
 NUM_FRAMEBUFFER_SURFACE_BUFFERS := 3
@@ -186,7 +194,7 @@ BOARD_NFC_HAL_SUFFIX := $(TARGET_BOARD_PLATFORM)
 
 # Power
 TARGET_HAS_LEGACY_POWER_STATS := true
-TARGET_HAS_NO_WIFI_STATS := true
+TARGET_HAS_NO_WLAN_STATS := true
 TARGET_USES_INTERACTION_BOOST := true
 
 # QCOM hardware
@@ -199,8 +207,7 @@ TARGET_RIL_VARIANT := caf
 TARGET_RECOVERY_FSTAB := $(DEVICE_PATH)/rootdir/etc/fstab.qcom
 
 # SELinux
-include device/qcom/sepolicy/sepolicy.mk
-include device/qcom/sepolicy/legacy-sepolicy.mk
+include device/qcom/sepolicy-legacy/sepolicy.mk
 
 BOARD_SEPOLICY_DIRS += \
     $(DEVICE_PATH)/sepolicy

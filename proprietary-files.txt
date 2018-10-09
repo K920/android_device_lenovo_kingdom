@@ -9,7 +9,7 @@ vendor/lib/rfsa/adsp/libfastcvadsp.so
 vendor/lib/rfsa/adsp/libfastcvadsp_skel.so
 
 # Bluetooth
-vendor/bin/btnvtool
+bin/btnvtool:vendor/bin/btnvtool
 vendor/bin/hci_qcomm_init
 vendor/lib/libbtnv.so
 

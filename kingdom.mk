@@ -88,10 +88,12 @@ PRODUCT_PACKAGES += \
 
 # Dalvik
 PRODUCT_PROPERTY_OVERRIDES += \
-    dalvik.vm.heapgrowthlimit=192m \
-    dalvik.vm.heapsize=512m
-
-$(call inherit-product-if-exists, frameworks/native/build/phone-xxxhdpi-3072-dalvik-heap.mk)
+    dalvik.vm.heapstartsize=16m \
+    dalvik.vm.heapgrowthlimit=288m \
+    dalvik.vm.heapsize=768m \
+    dalvik.vm.heaptargetutilization=0.75 \
+    dalvik.vm.heapminfree=2m \
+    dalvik.vm.heapmaxfree=8m
 
 # Data
 PRODUCT_PACKAGES += \
@@ -261,8 +263,7 @@ PRODUCT_COPY_FILES += \
 
 # Power
 PRODUCT_PACKAGES += \
-    android.hardware.power@1.0-service-qti
-    #android.hardware.power@1.0-service.kingdom
+    android.hardware.power@1.1-service-qti
 
 # Ramdisk
 PRODUCT_PACKAGES += \
@@ -273,7 +274,8 @@ PRODUCT_PACKAGES += \
     init.qcom.rc \
     init.qcom.power.rc \
     init.qcom.usb.rc \
-    init.recovery.qcom.rc
+    init.recovery.qcom.rc \
+    init.program_bdaddr.sh
 
 # RenderScript
 PRODUCT_PACKAGES += \
@@ -288,13 +290,20 @@ PRODUCT_COPY_FILES += \
 PRODUCT_PACKAGES += \
     android.hardware.sensors@1.0-impl
 
+
+# TextClassifier smart selection model files
+PRODUCT_PACKAGES += \
+    textclassifier.bundle1
+
 # Thermal
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/configs/thermal-engine.conf:$(TARGET_COPY_OUT_VENDOR)/etc/thermal-engine-8974.conf
 
 # USB
 PRODUCT_PACKAGES += \
-    android.hardware.usb@1.0-service
+    android.hardware.usb@1.0-service.basic \
+    android.hardware.usb@1.0-service \
+    com.android.future.usb.accessory
 
 # Vendor security patch level
 PRODUCT_PROPERTY_OVERRIDES += \
