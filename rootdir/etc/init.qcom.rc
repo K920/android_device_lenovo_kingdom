@@ -13,8 +13,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-import /system/vendor/etc/init/hw/init.qcom.usb.rc
-import /system/vendor/etc/init/hw/init.qcom.power.rc
+import /vendor/etc/init/hw/init.qcom.usb.rc
+import /vendor/etc/init/hw/init.qcom.power.rc
 
 on early-init
     mount debugfs debugfs /sys/kernel/debug
@@ -43,7 +43,7 @@ on fs
     wait /dev/block/platform/${ro.boot.bootdevice}
     symlink /dev/block/platform/${ro.boot.bootdevice} /dev/block/bootdevice
 
-    mount_all ./system/vendor/etc/fstab.qcom
+    mount_all ./vendor/etc/fstab.qcom
 
     # HACK: In order to successfully read nv_hwid from NV
     # during vendor_load_properties() we need to start adsp
@@ -325,7 +325,7 @@ service charger /charger
     critical
     seclabel u:r:charger:s0
 
-service hvdcp /system/vendor/bin/hvdcp
+service hvdcp /vendor/bin/hvdcp
     class core
     user root
     disabled
@@ -363,7 +363,7 @@ service time_daemon /vendor/bin/time_daemon
 on property:vold.decrypt=trigger_restart_framework
     start wcnss-service
 
-service hciattach /system/vendor/bin/init.qcom.bt.sh
+service hciattach /vendor/bin/init.qcom.bt.sh
     class late_start
     user bluetooth
     group bluetooth net_bt_admin oem_2950 radio
@@ -387,7 +387,7 @@ service wcnss-service /vendor/bin/wcnss_service
     group system wifi oem_2950 radio
     oneshot
 
-service ppd /system/vendor/bin/mm-pp-daemon
+service ppd /vendor/bin/mm-pp-daemon
     class late_start
     disabled
     user system
