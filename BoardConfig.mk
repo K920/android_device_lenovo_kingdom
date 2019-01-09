@@ -49,6 +49,7 @@ BOARD_KERNEL_CMDLINE := console=tty60,115200,n8 androidboot.hardware=qcom \
                         user_debug=31 msm_rtb.filter=0x3b7 androidboot.bootdevice=msm_sdcc.1 \
 			ehci-hcd.park=3 \
 			vmalloc=480M \
+			pm.sleep_mode=1 \
 			androidboot.selinux=permissive
 
 BOARD_KERNEL_SEPARATED_DT := true
@@ -76,9 +77,14 @@ BOARD_USES_ALSA_AUDIO := true
 USE_XML_AUDIO_POLICY_CONF := 1
 USE_CUSTOM_AUDIO_POLICY := 1
 
-
 # Binder
 TARGET_USES_64_BIT_BINDER := true
+
+# Bionic
+TARGET_LD_SHIM_LIBS := \
+    /system/vendor/bin/mpdecision|libshims_atomic.so \
+    /system/vendor/lib/libqomx_jpegenc.so|libboringssl-compat.so \
+    /system/vendor/lib/libmmqjpeg_codec.so|libboringssl-compat.so
 
 # Bluetooth
 BOARD_HAVE_BLUETOOTH := true
@@ -88,11 +94,19 @@ BLUETOOTH_HCI_USE_MCT := true
 BOARD_BLUETOOTH_BDROID_BUILDCFG_INCLUDE_DIR := $(DEVICE_PATH)/bluetooth
 BOARD_CUSTOM_BT_CONFIG := $(DEVICE_PATH)/bluetooth/vnd_kingdom.txt
 
+# Boot animation
+TARGET_BOOTANIMATION_HALF_RES := true
+TARGET_BOOTANIMATION_MULTITHREAD_DECODE := true
+TARGET_BOOTANIMATION_PRELOAD := true
+TARGET_BOOTANIMATION_TEXTURE_CACHE := true
+
 # Camera
-TARGET_USE_VENDOR_CAMERA_EXT := true
+# TARGET_USE_VENDOR_CAMERA_EXT := true
 USE_DEVICE_SPECIFIC_CAMERA := true
-TARGET_PROCESS_SDK_VERSION_OVERRIDE := \
-    /system/vendor/bin/mm-qcamera-daemon=23
+TARGET_NEEDS_LEGACY_CAMERA_HAL1_DYN_NATIVE_HANDLE := true
+TARGET_PROCESS_SDK_VERSION_OVERRIDE += \
+    /system/bin/mediaserver=22 \
+    /system/vendor/bin/mm-qcamera-daemon=22
 
 # Charger
 BOARD_CHARGER_ENABLE_SUSPEND := true
@@ -141,6 +155,7 @@ TARGET_USERIMAGES_USE_EXT4 := true
 TARGET_USERIMAGES_USE_F2FS := true
 
 TARGET_FS_CONFIG_GEN := $(DEVICE_PATH)/config.fs
+BOARD_ROOT_EXTRA_FOLDERS := firmware
 
 # Use mke2fs instead of make_ext4fs
 TARGET_USES_MKE2FS := true
@@ -166,7 +181,7 @@ TARGET_ADDITIONAL_GRALLOC_10_USAGE_BITS := 0x02000000U
 OVERRIDE_RS_DRIVER := libRSDriver_adreno.so
 HAVE_ADRENO_SOURCE:= false
 NUM_FRAMEBUFFER_SURFACE_BUFFERS := 3
-TARGET_USE_COMPAT_GRALLOC_PERFORM := true
+TARGET_NEEDS_PLATFORM_TEXT_RELOCATIONS := true
 
 # Shader cache config options
 # Maximum size of the  GLES Shaders that can be cached for reuse.
@@ -182,6 +197,9 @@ MAX_EGL_CACHE_SIZE := 2048*1024
 DEVICE_MANIFEST_FILE := $(DEVICE_PATH)/manifest.xml
 DEVICE_MATRIX_FILE := $(DEVICE_PATH)/compatibility_matrix.xml
 
+# HWUI
+HWUI_COMPILE_FOR_PERF := true
+
 # Init
 TARGET_INIT_VENDOR_LIB := libinit_kingdom
 TARGET_RECOVERY_DEVICE_MODULES := libinit_kingdom
@@ -196,9 +214,9 @@ TARGET_PROVIDES_LIBLIGHT := true
 TARGET_USES_MEDIA_EXTENSIONS := true
 
 # NFC
-BOARD_NFC_CHIPSET := pn547
-BOARD_NFC_DEVICE := /dev/pn547
-BOARD_NFC_HAL_SUFFIX := $(TARGET_BOARD_PLATFORM)
+#BOARD_NFC_CHIPSET := pn547
+#BOARD_NFC_DEVICE := /dev/pn547
+#BOARD_NFC_HAL_SUFFIX := $(TARGET_BOARD_PLATFORM)
 
 # Power
 TARGET_HAS_LEGACY_POWER_STATS := true
@@ -242,15 +260,5 @@ TARGET_USES_MEDIA_EXTENSIONS := true
 
 # Added to indicate that protobuf-c is supported in this build
 PROTOBUF_SUPPORTED := true
-
-# DEX Pre-optimization
-ifeq ($(HOST_OS),linux)
-  ifeq ($(TARGET_BUILD_VARIANT),eng)
-    ifeq ($(WITH_DEXPREOPT),)
-      WITH_DEXPREOPT := true
-      WITH_DEXPREOPT_BOOT_IMG_AND_SYSTEM_SERVER_ONLY := true
-    endif
-  endif
-endif
 
 -include vendor/lenovo/kingdom/BoardConfigVendor.mk

@@ -86,14 +86,20 @@ PRODUCT_PACKAGES += \
     camera.msm8974 \
     Snap
 
+PRODUCT_COPY_FILES += \
+    $(LOCAL_PATH)/configs/external_camera_config.xml:$(TARGET_COPY_OUT_VENDOR)/etc/external_camera_config.xml
+
 # Dalvik
 PRODUCT_PROPERTY_OVERRIDES += \
+    dalvik.vm.checkjni=false \
     dalvik.vm.heapstartsize=16m \
-    dalvik.vm.heapgrowthlimit=288m \
-    dalvik.vm.heapsize=768m \
+    dalvik.vm.heapgrowthlimit=192m \
+    dalvik.vm.heapsize=512m \
     dalvik.vm.heaptargetutilization=0.75 \
     dalvik.vm.heapminfree=2m \
-    dalvik.vm.heapmaxfree=8m
+    dalvik.vm.heapmaxfree=8m \
+    dalvik.vm.verify-bytecode=false \
+    persist.sys.purgeable_assets=1
 
 # Data
 PRODUCT_PACKAGES += \
@@ -109,10 +115,6 @@ PRODUCT_AAPT_PREBUILT_DPI := xxxhdpi xxhdpi xhdpi hdpi
 PRODUCT_PACKAGES += \
     android.hardware.drm@1.0-impl \
     android.hardware.drm@1.0-service
-
-# Emergenry number list
-PRODUCT_PACKAGES += \
-    qcril_cm.db
 
 # Filesystem
 PRODUCT_PACKAGES += \
@@ -148,6 +150,7 @@ PRODUCT_PACKAGES += \
     android.hardware.graphics.allocator@2.0-impl \
     android.hardware.graphics.allocator@2.0-service \
     android.hardware.graphics.composer@2.1-impl \
+    android.hardware.graphics.composer@2.1-service \
     android.hardware.graphics.mapper@2.0-impl \
     android.hardware.memtrack@1.0-impl \
     android.hardware.memtrack@1.0-service \
@@ -155,7 +158,17 @@ PRODUCT_PACKAGES += \
     gralloc.msm8974 \
     hwcomposer.msm8974 \
     memtrack.msm8974 \
-    liboverlay
+    liboverlay \
+    libboringssl-compat
+
+PRODUCT_PROPERTY_OVERRIDES += \
+    debug.hwui.use_buffer_age=false \
+    debug.hwui.renderer=opengl
+
+# Health
+PRODUCT_PACKAGES += \
+    android.hardware.health@1.0-impl \
+    android.hardware.health@2.0-service
 
 # IPC Security config
 PRODUCT_COPY_FILES += \
@@ -219,22 +232,26 @@ PRODUCT_PACKAGES += \
 # NFC
 # See https://github.com/LineageOS/android_external_libnfc-nci/blob/cm-14.1/halimpl/pn54x/Android.mk#L21
 # for magic values of NXP_CHIP_TYPE.
-NXP_CHIP_TYPE := 1
+#NXP_CHIP_TYPE := 1
 
-PRODUCT_COPY_FILES += \
-    frameworks/native/data/etc/com.android.nfc_extras.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/com.android.nfc_extras.xml \
-    frameworks/native/data/etc/android.hardware.nfc.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.nfc.xml \
-    frameworks/native/data/etc/android.hardware.nfc.hce.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.nfc.hce.xml \
-    $(LOCAL_PATH)/configs/libnfc-brcm.conf:$(TARGET_COPY_OUT_VENDOR)/etc/libnfc-brcm.conf \
-    $(LOCAL_PATH)/configs/libnfc-nxp.conf:$(TARGET_COPY_OUT_VENDOR)/etc/libnfc-nxp.conf \
-    $(LOCAL_PATH)/configs/nfcee_access.xml:$(TARGET_COPY_OUT_VENDOR)/etc/nfcee_access.xml
+#PRODUCT_COPY_FILES += \
+#    frameworks/native/data/etc/com.android.nfc_extras.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/com.android.nfc_extras.xml \
+#    frameworks/native/data/etc/android.hardware.nfc.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.nfc.xml \
+#    frameworks/native/data/etc/android.hardware.nfc.hce.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.nfc.hce.xml \
+#    $(LOCAL_PATH)/configs/libnfc-brcm.conf:$(TARGET_COPY_OUT_VENDOR)/etc/libnfc-brcm.conf \
+#    $(LOCAL_PATH)/configs/libnfc-nci.conf:$(TARGET_COPY_OUT_VENDOR)/etc/libnfc-nci.conf \
+#    $(LOCAL_PATH)/configs/nfcee_access.xml:$(TARGET_COPY_OUT_VENDOR)/etc/nfcee_access.xml
 
+#PRODUCT_PACKAGES += \
+#    android.hardware.nfc@1.0-impl \
+#    com.android.nfc_extras \
+#    NfcNci \
+#    Tag
+###   nfc_nci.msm8974 \
+
+# Perf
 PRODUCT_PACKAGES += \
-    android.hardware.nfc@1.0-impl \
-    nfc_nci.msm8974 \
-    com.android.nfc_extras \
-    NfcNci \
-    Tag
+    libshims_atomic
 
 # Permissions
 PRODUCT_COPY_FILES += \
@@ -295,9 +312,13 @@ PRODUCT_PACKAGES += \
 PRODUCT_PACKAGES += \
     textclassifier.bundle1
 
+# Thermanager
+PRODUCT_PACKAGES += \
+    thermanager
+
 # Thermal
 PRODUCT_COPY_FILES += \
-    $(LOCAL_PATH)/configs/thermal-engine.conf:$(TARGET_COPY_OUT_VENDOR)/etc/thermal-engine-8974.conf
+    $(LOCAL_PATH)/configs/thermanager.xml:$(TARGET_COPY_OUT_VENDOR)/etc/thermanager.xml
 
 # USB
 PRODUCT_PACKAGES += \

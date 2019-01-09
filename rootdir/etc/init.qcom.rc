@@ -25,14 +25,12 @@ on early-init
     chown system system /sys/kernel/debug/kgsl/proc
 
 on init
-    # Set permissions for persist partition
-    mkdir /persist 0771 system system
-    mkdir /oem 0550 root root
-
     # Support legacy paths
     symlink /sdcard /storage/sdcard0
 
     start program_bdaddr
+
+    export LD_PRELOAD /system/lib/libboringssl-compat.so
 
 on early-boot
     # Set RLIMIT_MEMLOCK to 64MB
@@ -173,10 +171,12 @@ on boot
     # Wifi firmware reload path
     chown wifi wifi /sys/module/wlan/parameters/fwpath
 
+on post-fs
+    # Allow writing to the kernel trace log.
+    chmod 0222 /sys/kernel/debug/tracing/trace_marker
+
 # msm specific files that need to be created on /data
 on post-fs-data
-    chmod 0755 /sys/kernel/debug/tracing
-
     mkdir /data/media 0770 media_rw media_rw
 
     # Create directory for TZ Apps
@@ -223,14 +223,6 @@ on post-fs-data
     chown system system /persist
     chmod 0771 /persist
 
-    # Create directories for Location services
-    mkdir /data/misc/location 0770 gps gps
-    mkdir /data/misc/location/mq 0770 gps gps
-    mkdir /data/misc/location/xtwifi 0770 gps gps
-    mkdir /data/misc/location/gpsone_d 0770 system gps
-    mkdir /data/misc/location/quipc 0770 gps system
-    mkdir /data/misc/location/gsiff 0770 gps gps
-
     # Create directory from IMS services
     mkdir /data/shared 0755
     chown system system /data/shared
@@ -247,24 +239,18 @@ on post-fs-data
     setprop vold.post_fs_data_done 1
 
     # Create PERFD deamon related dirs
-    mkdir /data/misc/perfd 0755 root system
-    chmod 2755 /data/misc/perfd
     mkdir /data/system/perfd 0770 root system
     chmod 2770 /data/system/perfd
 
     # Camera sockets
     mkdir /data/misc/camera 0770 camera camera
 
-    # Custom ECC
-    mkdir /data/misc/radio 0700 radio radio
-    copy /vendor/etc/qcril_cm.db /data/misc/radio/qcril.db
-    chown radio radio /data/misc/radio/qcril.db
-    chmod 700 /data/misc/radio/qcril.db
-
 service rmt_storage /vendor/bin/rmt_storage
     class core
     user root
     group system wakelock
+    shutdown critical
+    ioprio rt 0
 
 service rfs_access /vendor/bin/rfs_access
     class core
@@ -280,7 +266,7 @@ service qmuxd /vendor/bin/qmuxd
 service netmgrd /vendor/bin/netmgrd
     class main
     user root
-    group root wifi wakelock radio inet oem_2950
+    group root wifi wakelock radio inet oem_2950 system
 
 # QCOM sensor
 service sensors /vendor/bin/sensors.qcom
@@ -328,13 +314,7 @@ service charger /charger
 service hvdcp /vendor/bin/hvdcp
     class core
     user root
-    disabled
-
-on property:persist.usb.hvdcp.detect=true
-    start hvdcp
-
-on property:persist.usb.hvdcp.detect=false
-    stop hvdcp
+    group root
 
 service qcamerasvr /vendor/bin/mm-qcamera-daemon
     class late_start
@@ -345,15 +325,13 @@ service mpdecision /vendor/bin/mpdecision --avg_comp
     class main
     user root
     group root readproc
+    socket perfd seqpacket 0666 root system
     disabled
 
-service thermal-engine /vendor/bin/thermal-engine
-    class main
-    user root
-    group root
-    socket thermal-send-client stream 0666 system system
-    socket thermal-recv-client stream 0660 system system
-    socket thermal-recv-passive-client stream 0666 system system
+service thermanager /vendor/bin/thermanager /vendor/etc/thermanager.xml
+    class late_start
+    user system
+    group system
 
 service time_daemon /vendor/bin/time_daemon
     class late_start
@@ -368,6 +346,7 @@ service hciattach /vendor/bin/init.qcom.bt.sh
     user bluetooth
     group bluetooth net_bt_admin oem_2950 radio
     disabled
+    seclabel u:r:bluetooth_loader:s0
     oneshot
 
 on property:vendor.bluetooth.hciattach=true
@@ -407,5 +386,6 @@ service fuse_usbdisk /system/bin/sdcard -u 1023 -g 1023 -w 1023 -d /mnt/media_rw
 service program_bdaddr /vendor/bin/init.program_bdaddr.sh
     user bluetooth
     group bluetooth
+    seclabel u:r:bluetooth_loader:s0
     disabled
     oneshot

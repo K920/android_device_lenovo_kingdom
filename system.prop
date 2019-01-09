@@ -10,6 +10,7 @@ persist.vendor.audio.fluence.voicecall=true
 persist.vendor.audio.fluence.voicerec=false
 persist.vendor.audio.fluence.speaker=false
 vendor.audio.offload.buffer.size.kb=32
+ro.audio.flinger_standbytime_ms=300
 av.offload.enable=true
 av.streaming.offload.enable=true
 vendor.audio.offload.multiple.enabled=false
@@ -51,6 +52,9 @@ debug.hwui.use_buffer_age=false
 persist.gps.qc_nlp_in_use=0
 ro.gps.agps_provider=1
 
+# OTA
+lineage.updater.uri=https://frantisheq.000webhostapp.com/LineageOTA/api/v1/{device}/{type}/{incr}
+
 # Performance
 ro.vendor.extension_library=libqti-perfd-client.so
 
@@ -80,8 +84,12 @@ ro.qti.sensors.pick_up=false
 ro.qti.sensors.tilt_detector=true
 ro.qti.sensors.scrn_ortn=true
 
+# UI
+sys.use_fifo_ui=1
+
 # Wifi
 wifi.interface=wlan0
+wifi.direct.interface=p2p0
 
 # ro.product.first_api_level indicates the first api level the device has commercially launched on.
 ro.product.first_api_level=19
