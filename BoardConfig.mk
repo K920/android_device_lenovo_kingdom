@@ -103,6 +103,9 @@ GREEN_LED_PATH := "/sys/class/leds/led:rgb_green/brightness"
 BLUE_LED_PATH := "/sys/class/leds/led:rgb_blue/brightness"
 BLINK_PATH := "/sys/class/leds/led:rgb_red/blink"
 
+# Display
+TARGET_MSM8974_1440P_EGL_WORKAROUND := true
+
 # Lineage Hardware
 JAVA_SOURCE_OVERLAYS := org.lineageos.hardware|$(DEVICE_PATH)/lineagehw|**/*.java
 
