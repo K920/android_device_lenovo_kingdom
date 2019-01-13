@@ -107,9 +107,9 @@ PRODUCT_PACKAGES += \
 
 # Display
 PRODUCT_AAPT_CONFIG := normal
-PRODUCT_AAPT_PREF_CONFIG := xxxhdpi
+PRODUCT_AAPT_PREF_CONFIG := xxhdpi
 # A list of dpis to select prebuilt apk, in precedence order.
-PRODUCT_AAPT_PREBUILT_DPI := xxxhdpi xxhdpi xhdpi hdpi
+PRODUCT_AAPT_PREBUILT_DPI := xxhdpi xhdpi hdpi
 
 # DRM
 PRODUCT_PACKAGES += \
