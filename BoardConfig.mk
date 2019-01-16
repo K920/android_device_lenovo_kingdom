@@ -214,14 +214,17 @@ TARGET_PROVIDES_LIBLIGHT := true
 TARGET_USES_MEDIA_EXTENSIONS := true
 
 # NFC
-#BOARD_NFC_CHIPSET := pn547
-#BOARD_NFC_DEVICE := /dev/pn547
-#BOARD_NFC_HAL_SUFFIX := $(TARGET_BOARD_PLATFORM)
+BOARD_NFC_CHIPSET := pn547
+BOARD_NFC_DEVICE := /dev/pn547
+BOARD_NFC_HAL_SUFFIX := $(TARGET_DEVICE)
 
 # Power
 TARGET_HAS_LEGACY_POWER_STATS := true
 TARGET_HAS_NO_WLAN_STATS := true
 TARGET_USES_INTERACTION_BOOST := true
+
+# Protobuf
+PROTOBUF_SUPPORTED := true
 
 # QCOM hardware
 BOARD_USES_QCOM_HARDWARE := true
@@ -254,11 +257,5 @@ WIFI_DRIVER_FW_PATH_STA          := "sta"
 WIFI_DRIVER_FW_PATH_AP           := "ap"
 TARGET_USES_QCOM_WCNSS_QMI       := true
 TARGET_USES_WCNSS_MAC_ADDR_REV   := true
-
-# Media
-TARGET_USES_MEDIA_EXTENSIONS := true
-
-# Added to indicate that protobuf-c is supported in this build
-PROTOBUF_SUPPORTED := true
 
 -include vendor/lenovo/kingdom/BoardConfigVendor.mk
