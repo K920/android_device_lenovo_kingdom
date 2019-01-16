@@ -362,5 +362,8 @@ PRODUCT_PROPERTY_OVERRIDES += \
     ro.min.fling_velocity=160 \
     ro.max.fling_velocity=20000
 
+PRODUCT_PACKAGES += qti-telephony-common
+PRODUCT_BOOT_JARS += telephony-ext
+
 # Call the proprietary setup
 $(call inherit-product-if-exists, vendor/lenovo/kingdom/kingdom-vendor.mk)
