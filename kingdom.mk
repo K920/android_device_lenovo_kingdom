@@ -356,5 +356,11 @@ PRODUCT_PACKAGES += \
     p2p_supplicant_overlay.conf \
     wcnss_service
 
+# Higher fling velocities to smooth scrolling
+# and provide better responsiveness
+PRODUCT_PROPERTY_OVERRIDES += \
+    ro.min.fling_velocity=160 \
+    ro.max.fling_velocity=20000
+
 # Call the proprietary setup
 $(call inherit-product-if-exists, vendor/lenovo/kingdom/kingdom-vendor.mk)
