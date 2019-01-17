@@ -22,8 +22,7 @@ audio.offload.pcm.24bit.enable=true
 vendor.dedicated.device.for.voip=true
 
 # Bluetooth
-bluetooth.hfp.client=1
-vendor.qcom.bluetooth.soc=smd
+vendor.qcom.bluetooth.soc=pronto
 ro.bluetooth.hfp.ver=1.7
 ro.qualcomm.bt.hci_transport=smd
 

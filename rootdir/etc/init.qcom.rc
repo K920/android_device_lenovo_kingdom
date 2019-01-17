@@ -182,7 +182,7 @@ on post-fs-data
     # Create directory for TZ Apps
     mkdir /data/misc/qsee 0770 system system
 
-    # bluetooth
+    # Bluetooth
     mkdir /data/misc/bluetooth 0770 bluetooth bluetooth
 
     # Create directory used by audio subsystem
