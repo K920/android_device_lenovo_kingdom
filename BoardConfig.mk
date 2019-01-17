@@ -21,7 +21,7 @@ DEVICE_PATH := device/lenovo/kingdom
 TARGET_OTA_ASSERT_DEVICE := kingdom,kingdom_row,kingdomt
 
 # Include path
-TARGET_SPECIFIC_HEADER_PATH += $(DEVICE_PATH)/include
+TARGET_SPECIFIC_HEADER_PATH := $(DEVICE_PATH)/include
 
 # Bootloader
 TARGET_BOOTLOADER_BOARD_NAME := MSM8974
@@ -37,6 +37,7 @@ TARGET_ARCH := arm
 TARGET_ARCH_VARIANT := armv7-a-neon
 TARGET_CPU_ABI := armeabi-v7a
 TARGET_CPU_ABI2 := armeabi
+TARGET_CPU_MEMCPY_BASE_OPT_DISABLE := true
 TARGET_CPU_VARIANT := krait
 TARGET_CPU_SMP := true
 ARCH_ARM_HAVE_TLS_REGISTER := true
@@ -87,7 +88,6 @@ TARGET_LD_SHIM_LIBS := \
     /system/vendor/lib/libmmqjpeg_codec.so|libboringssl-compat.so
 
 # Bluetooth
-BOARD_HAVE_BLUETOOTH := true
 BOARD_HAVE_BLUETOOTH_QCOM := true
 QCOM_BT_USE_SMD_TTY := true
 BLUETOOTH_HCI_USE_MCT := true
@@ -101,10 +101,9 @@ TARGET_BOOTANIMATION_PRELOAD := true
 TARGET_BOOTANIMATION_TEXTURE_CACHE := true
 
 # Camera
-# TARGET_USE_VENDOR_CAMERA_EXT := true
 USE_DEVICE_SPECIFIC_CAMERA := true
-TARGET_NEEDS_LEGACY_CAMERA_HAL1_DYN_NATIVE_HANDLE := true
-TARGET_PROCESS_SDK_VERSION_OVERRIDE += \
+TARGET_HAS_LEGACY_CAMERA_HAL1 := true
+TARGET_PROCESS_SDK_VERSION_OVERRIDE := \
     /system/bin/mediaserver=22 \
     /system/vendor/bin/mm-qcamera-daemon=22
 
@@ -253,6 +252,9 @@ TW_USE_TOOLBOX := true
 TW_EXCLUDE_SUPERSU := true
 TW_EXCLUDE_TWRPAPP := true
 endif
+
+# Vendor security patch level
+VENDOR_SECURITY_PATCH := 2019-11-10
 
 # Wifi
 BOARD_HAS_QCOM_WLAN              := true

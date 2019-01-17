@@ -226,18 +226,14 @@ PRODUCT_COPY_FILES += \
 # Media
  PRODUCT_PACKAGES += \
     libc2dcolorconvert \
-    libdivxdrmdecrypt \
-    libdashplayer \
     libOmxAacEnc \
     libOmxAmrEnc \
     libOmxCore \
     libOmxEvrcEnc \
     libOmxQcelp13Enc \
     libOmxVdec \
-    libOmxVdecHevc \
     libOmxVenc \
-    libstagefrighthw \
-    qcmediaplayer
+    libstagefrighthw
 
 # Misc dependencies
 PRODUCT_PACKAGES += \
@@ -343,11 +339,8 @@ PRODUCT_COPY_FILES += \
 
 # USB
 PRODUCT_PACKAGES += \
-    android.hardware.usb@1.0-service.basic
-
-# Vendor security patch level
-PRODUCT_PROPERTY_OVERRIDES += \
-    ro.lineage.build.vendor_security_patch=2019-10-10
+    android.hardware.usb@1.0-service.basic \
+    com.android.future.usb.accessory
 
 # Vibrator
 PRODUCT_PACKAGES += \
@@ -362,6 +355,7 @@ PRODUCT_COPY_FILES += \
 
 PRODUCT_PACKAGES += \
     android.hardware.wifi@1.0-service \
+    dhcpcd.conf \
     libwpa_client \
     hostapd \
     wificond \
