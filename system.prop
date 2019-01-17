@@ -86,6 +86,10 @@ ro.qti.sensors.scrn_ortn=true
 # UI
 sys.use_fifo_ui=1
 
+# Widewine
+drm.service.enabled=true
+ro.com.widevine.cachesize=16777216
+
 # Wifi
 wifi.interface=wlan0
 wifi.direct.interface=p2p0
