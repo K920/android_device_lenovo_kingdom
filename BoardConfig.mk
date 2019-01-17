@@ -244,6 +244,16 @@ BOARD_SEPOLICY_DIRS += \
 # Snapdragon LLVM
 TARGET_USE_SDCLANG := true
 
+# TWRP
+ifeq ($(WITH_TWRP),true)
+TARGET_RECOVERY_DEVICE_DIRS := $(DEVICE_PATH)/twrp
+TW_INCLUDE_CRYPTO := true
+TW_THEME := portrait_hdpi
+TW_USE_TOOLBOX := true
+TW_EXCLUDE_SUPERSU := true
+TW_EXCLUDE_TWRPAPP := true
+endif
+
 # Wifi
 BOARD_HAS_QCOM_WLAN              := true
 BOARD_WLAN_DEVICE                := qcwcn
