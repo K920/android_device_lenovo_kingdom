@@ -1520,7 +1520,7 @@
         <path name="speaker-dmic-endfire" />
     </path>
 
-    <path name="speaker-stereo-dmic-ef">
+    <path name="voip-main-mic-comm">
         <path name="speaker-dmic-endfire" />
     </path>
 
