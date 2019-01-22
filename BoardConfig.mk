@@ -21,7 +21,7 @@ DEVICE_PATH := device/lenovo/kingdom
 TARGET_OTA_ASSERT_DEVICE := kingdom,kingdom_row,kingdomt
 
 # Include path
-TARGET_SPECIFIC_HEADER_PATH := $(DEVICE_PATH)/include
+TARGET_SPECIFIC_HEADER_PATH += $(DEVICE_PATH)/include
 
 # Bootloader
 TARGET_BOOTLOADER_BOARD_NAME := MSM8974
@@ -83,9 +83,9 @@ TARGET_USES_64_BIT_BINDER := true
 
 # Bionic
 TARGET_LD_SHIM_LIBS := \
-    /system/vendor/bin/mpdecision|libshims_atomic.so \
-    /system/vendor/lib/libqomx_jpegenc.so|libboringssl-compat.so \
-    /system/vendor/lib/libmmqjpeg_codec.so|libboringssl-compat.so
+    /vendor/bin/mpdecision|libshims_atomic.so \
+    /vendor/lib/libqomx_jpegenc.so|libboringssl-compat.so \
+    /vendor/lib/libmmqjpeg_codec.so|libboringssl-compat.so
 
 # Bluetooth
 BOARD_HAVE_BLUETOOTH_QCOM := true
@@ -105,7 +105,7 @@ USE_DEVICE_SPECIFIC_CAMERA := true
 TARGET_HAS_LEGACY_CAMERA_HAL1 := true
 TARGET_PROCESS_SDK_VERSION_OVERRIDE := \
     /system/bin/mediaserver=22 \
-    /system/vendor/bin/mm-qcamera-daemon=22
+    /vendor/bin/mm-qcamera-daemon=22
 
 # Charger
 BOARD_CHARGER_ENABLE_SUSPEND := true

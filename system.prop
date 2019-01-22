@@ -2,25 +2,6 @@
 # system.prop for K920
 #
 
-# Audio
-mm.enable.smoothstreaming=true
-mm.enable.qcom_parser=37491
-ro.vendor.qc.sdk.audio.fluencetype=fluence
-persist.vendor.audio.fluence.voicecall=true
-persist.vendor.audio.fluence.voicerec=false
-persist.vendor.audio.fluence.speaker=false
-vendor.audio.offload.buffer.size.kb=32
-ro.audio.flinger_standbytime_ms=300
-av.offload.enable=true
-av.streaming.offload.enable=true
-vendor.audio.offload.multiple.enabled=false
-vendor.audio.offload.gapless.enabled=true
-vendor.tunnel.audio.encode=true
-media.aac_51_output_enabled=true
-audio.offload.pcm.16bit.enable=true
-audio.offload.pcm.24bit.enable=true
-vendor.dedicated.device.for.voip=true
-
 # Bluetooth
 vendor.qcom.bluetooth.soc=pronto
 ro.bluetooth.hfp.ver=1.7
@@ -35,10 +16,6 @@ ro.qualcomm.bluetooth.map=true
 ro.qualcomm.bluetooth.nap=true
 ro.qualcomm.bluetooth.opp=true
 ro.qualcomm.bluetooth.pbap=true
-
-# Camera
-camera2.portability.force_api=1
-camera.cts.test=0
 
 # Display & Graphics
 ro.sf.lcd_density=480
