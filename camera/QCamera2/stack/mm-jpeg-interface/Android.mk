@@ -2,6 +2,9 @@ OLD_LOCAL_PATH := $(LOCAL_PATH)
 LOCAL_PATH := $(call my-dir)
 include $(CLEAR_VARS)
 
+LOCAL_CLANG_CFLAGS += \
+        -Wno-error=unused-variable
+
 LOCAL_CFLAGS+= -D_ANDROID_
 
 LOCAL_HEADER_LIBRARIES := generated_kernel_headers
@@ -26,10 +29,6 @@ else
     LOCAL_CFLAGS+= -DMM_JPEG_CONCURRENT_SESSIONS_COUNT=1
 endif
 
-ifeq ($(call is-board-platform-in-list, msm8610),true)
-    LOCAL_CFLAGS+= -DLOAD_ADSP_RPC_LIB
-endif
-
 LOCAL_SRC_FILES := \
     src/mm_jpeg_queue.c \
     src/mm_jpeg_exif.c \
@@ -40,10 +39,9 @@ LOCAL_SRC_FILES := \
     src/mm_jpegdec.c
 
 LOCAL_MODULE           := libmmjpeg_interface
-LOCAL_PRELINK_MODULE   := false
 LOCAL_SHARED_LIBRARIES := libdl libcutils liblog libqomx_core
 LOCAL_MODULE_TAGS := optional
-LOCAL_PROPRIETARY_MODULE := true
+LOCAL_VENDOR_MODULE := true
 
 include $(BUILD_SHARED_LIBRARY)
 
