@@ -28,6 +28,9 @@ debug.hwui.use_buffer_age=false
 persist.gps.qc_nlp_in_use=0
 ro.gps.agps_provider=1
 
+# Memory optimizations
+ro.vendor.qti.sys.fw.bservice_enable=true
+
 # OTA
 lineage.updater.uri=https://frantisheq.000webhostapp.com/LineageOTA/api/v1/{device}/{type}/{incr}
 
