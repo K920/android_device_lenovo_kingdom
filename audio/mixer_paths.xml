@@ -1512,7 +1512,7 @@
     </path>
 
     <path name="handset-audio-mic">
-        <path name="dmic1" />
+        <path name="dmic6" />
     </path>
 
     <path name="handset-voice-mic">
