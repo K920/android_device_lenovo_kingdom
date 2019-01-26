@@ -63,9 +63,6 @@ ro.qti.sensors.pick_up=false
 ro.qti.sensors.tilt_detector=true
 ro.qti.sensors.scrn_ortn=true
 
-# UI
-sys.use_fifo_ui=1
-
 # Widewine
 drm.service.enabled=true
 ro.com.widevine.cachesize=16777216

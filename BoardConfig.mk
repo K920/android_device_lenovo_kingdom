@@ -173,7 +173,6 @@ TARGET_GPS_HAL_PATH := $(DEVICE_PATH)/gps
 TARGET_PROVIDES_GPS_LOC_API := true
 
 # Graphics
-# USE_OPENGL_RENDERER := true
 TARGET_CONTINUOUS_SPLASH_ENABLED := true
 TARGET_USES_ION := true
 TARGET_ADDITIONAL_GRALLOC_10_USAGE_BITS := 0x02000000U
@@ -185,19 +184,16 @@ TARGET_NEEDS_PLATFORM_TEXT_RELOCATIONS := true
 # Shader cache config options
 # Maximum size of the  GLES Shaders that can be cached for reuse.
 # Increase the size if shaders of size greater than 12KB are used.
-MAX_EGL_CACHE_KEY_SIZE := 12*1024
+MAX_EGL_CACHE_KEY_SIZE := 24*2048
 
 # Maximum GLES shader cache size for each app to store the compiled shader
 # binaries. Decrease the size if RAM or Flash Storage size is a limitation
 # of the device.
-MAX_EGL_CACHE_SIZE := 2048*1024
+MAX_EGL_CACHE_SIZE := 4096*2048
 
 # HIDL
 DEVICE_MANIFEST_FILE := $(DEVICE_PATH)/manifest.xml
 DEVICE_MATRIX_FILE := $(DEVICE_PATH)/compatibility_matrix.xml
-
-# HWUI
-# HWUI_COMPILE_FOR_PERF := true
 
 # Init
 TARGET_INIT_VENDOR_LIB := libinit_kingdom
