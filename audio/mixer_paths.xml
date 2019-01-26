@@ -605,9 +605,9 @@
 
     <path name="play-fm smartpa">
         <ctl name="Internal FM RX Volume" value="1" />
+        <ctl name="QUAT_MI2S_RX Audio Mixer INTERNAL_FM_TX" value="1" />
         <ctl name="SLIMBUS_0_RX Port Mixer INTERNAL_FM_TX" value="1" />
         <ctl name="SLIMBUS_DL_HL Switch" value="1" />
-        <ctl name="QUAT_MI2S_RX Audio Mixer INTERNAL_FM_TX" value="1" />
     </path>
 
     <path name="play-fm">
@@ -1405,7 +1405,7 @@
     </path>
 
     <path name="camcorder-mic">
-        <path name="dmic1" />
+        <path name="handset-mic" />
     </path>
 
     <path name="hdmi-tx">
@@ -1430,7 +1430,6 @@
     <path name="capture-fm">
     </path>
 
-
     <path name="aanc-handset-mic">
         <ctl name="AIF1_CAP Mixer SLIM TX7" value="1" />
         <ctl name="AIF1_CAP Mixer SLIM TX8" value="1" />
@@ -1452,7 +1451,7 @@
 
     <!-- Dual MIC devices -->
     <path name="speaker-dmic-levoice">
-	<ctl name="AIF1_CAP Mixer SLIM TX7" value="1" />
+        <ctl name="AIF1_CAP Mixer SLIM TX7" value="1" />
         <ctl name="AIF1_CAP Mixer SLIM TX8" value="1" />
         <ctl name="SLIM TX7 MUX" value="DEC7" />
         <ctl name="DEC7 MUX" value="DMIC1" />
@@ -1462,7 +1461,6 @@
         <ctl name="DEC7 Volume" value="84" />
         <ctl name="DEC6 Volume" value="84" />
     </path>
-
 
     <!-- Dual MIC devices -->
     <path name="speaker-dmic-endfire">
