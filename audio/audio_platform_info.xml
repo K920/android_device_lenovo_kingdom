@@ -126,7 +126,7 @@
     <device name="SND_DEVICE_OUT_VOIP_HANDSET" alias="voip-handset-comm" />
     <device name="SND_DEVICE_OUT_VOIP_SPEAKER" alias="voip-speaker-comm" />
     <device name="SND_DEVICE_OUT_VOIP_HEADPHONES" alias="voip-headset-comm" />
-    <device name="SND_DEVICE_IN_HANDSET_MIC" alias="handset-mic" />
+    <device name="SND_DEVICE_IN_HANDSET_MIC" alias="voice-dmic-ef" />
     <device name="SND_DEVICE_IN_HANDSET_MIC_AEC" alias="handset-mic" />
     <device name="SND_DEVICE_IN_HANDSET_MIC_NS" alias="handset-mic" />
     <device name="SND_DEVICE_IN_HANDSET_MIC_AEC_NS" alias="handset-mic" />
