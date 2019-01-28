@@ -103,8 +103,8 @@ TARGET_BOOTANIMATION_TEXTURE_CACHE := true
 # Camera
 USE_DEVICE_SPECIFIC_CAMERA := true
 TARGET_PROCESS_SDK_VERSION_OVERRIDE := \
-    /system/bin/mediaserver=22 \
-    /vendor/bin/mm-qcamera-daemon=23
+    /system/bin/mediaserver=21 \
+    /vendor/bin/mm-qcamera-daemon=21
 
 # Charger
 BOARD_CHARGER_ENABLE_SUSPEND := true
