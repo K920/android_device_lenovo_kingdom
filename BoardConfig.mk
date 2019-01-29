@@ -20,9 +20,6 @@ DEVICE_PATH := device/lenovo/kingdom
 # Assert compatibility
 TARGET_OTA_ASSERT_DEVICE := kingdom,kingdom_row,kingdomt
 
-# Include path
-TARGET_SPECIFIC_HEADER_PATH += $(DEVICE_PATH)/include
-
 # Bootloader
 TARGET_BOOTLOADER_BOARD_NAME := MSM8974
 TARGET_NO_BOOTLOADER := true
@@ -50,11 +47,10 @@ BOARD_KERNEL_CMDLINE := console=tty60,115200,n8 androidboot.hardware=qcom \
                         user_debug=31 msm_rtb.filter=0x3b7 androidboot.bootdevice=msm_sdcc.1 \
 			ehci-hcd.park=3 \
 			vmalloc=480M \
-			pm.sleep_mode=1 \
-			androidboot.selinux=permissive
+			pm.sleep_mode=1
 
 BOARD_KERNEL_SEPARATED_DT := true
-BOARD_MKBOOTIMG_ARGS := --ramdisk_offset 0x02000000 --tags_offset 0x01e00000
+BOARD_MKBOOTIMG_ARGS := --ramdisk_offset 0x01000000 --tags_offset 0x00000100
 BOARD_DTBTOOL_ARGS := -2
 TARGET_KERNEL_ARCH := arm
 TARGET_KERNEL_SOURCE := kernel/cyanogen/msm8974
@@ -64,10 +60,18 @@ TARGET_KERNEL_CONFIG := lineageos_k920_defconfig
 BOARD_ANT_WIRELESS_DEVICE := "vfs-prerelease"
 
 # Audio
-BOARD_USES_ALSA_AUDIO := true
-AUDIO_FEATURE_ENABLED_MULTI_VOICE_SESSIONS := true
+AUDIO_FEATURE_ENABLED_EXTN_FORMATS := true
+AUDIO_FEATURE_ENABLED_EXTN_POST_PROC := true
+AUDIO_FEATURE_ENABLED_FLUENCE := true
+AUDIO_FEATURE_ENABLED_HFP := true
 AUDIO_FEATURE_ENABLED_HWDEP_CAL := true
 AUDIO_FEATURE_ENABLED_LOW_LATENCY_CAPTURE := true
+AUDIO_FEATURE_ENABLED_MULTI_VOICE_SESSIONS := true
+AUDIO_FEATURE_ENABLED_NEW_SAMPLE_RATE := true
+AUDIO_FEATURE_ENABLED_PROXY_DEVICE := true
+AUDIO_FEATURE_LOW_LATENCY_PRIMARY := true
+BOARD_USES_ALSA_AUDIO := true
+USE_XML_AUDIO_POLICY_CONF := 1
 USE_CUSTOM_AUDIO_POLICY := 1
 
 # Binder
@@ -80,6 +84,7 @@ TARGET_LD_SHIM_LIBS := \
     /vendor/lib/libmmqjpeg_codec.so|libboringssl-compat.so
 
 # Bluetooth
+BOARD_HAVE_BLUETOOTH := true
 BOARD_HAVE_BLUETOOTH_QCOM := true
 QCOM_BT_USE_SMD_TTY := true
 BLUETOOTH_HCI_USE_MCT := true
@@ -93,6 +98,7 @@ TARGET_BOOTANIMATION_PRELOAD := true
 TARGET_BOOTANIMATION_TEXTURE_CACHE := true
 
 # Camera
+TARGET_USE_VENDOR_CAMERA_EXT := true
 USE_DEVICE_SPECIFIC_CAMERA := true
 TARGET_PROCESS_SDK_VERSION_OVERRIDE := \
     /system/bin/mediaserver=21 \
@@ -170,6 +176,7 @@ TARGET_ADDITIONAL_GRALLOC_10_USAGE_BITS := 0x02000000U
 OVERRIDE_RS_DRIVER := libRSDriver_adreno.so
 HAVE_ADRENO_SOURCE := false
 NUM_FRAMEBUFFER_SURFACE_BUFFERS := 2
+TARGET_USE_COMPAT_GRALLOC_PERFORM := true
 TARGET_NEEDS_PLATFORM_TEXT_RELOCATIONS := true
 
 # Shader cache config options
@@ -240,9 +247,6 @@ TW_USE_TOOLBOX := true
 TW_EXCLUDE_SUPERSU := true
 TW_EXCLUDE_TWRPAPP := true
 endif
-
-# Vendor security patch level
-VENDOR_SECURITY_PATCH := 2019-11-10
 
 # Wifi
 BOARD_HAS_QCOM_WLAN              := true

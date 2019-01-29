@@ -42,9 +42,9 @@ PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/audio/acdb/MTP_Speaker_cal.acdb:$(TARGET_COPY_OUT_VENDOR)/etc/acdbdata/MTP/MTP_Speaker_cal.acdb
 
 PRODUCT_COPY_FILES += \
-    $(LOCAL_PATH)/audio/audio_effects.conf:$(TARGET_COPY_OUT_VENDOR)/etc/audio_effects.conf \
+    $(LOCAL_PATH)/audio/audio_effects.xml:$(TARGET_COPY_OUT_VENDOR)/etc/audio_effects.xml \
     $(LOCAL_PATH)/audio/audio_platform_info.xml:$(TARGET_COPY_OUT_VENDOR)/etc/audio_platform_info.xml \
-    $(LOCAL_PATH)/audio/audio_policy.conf:$(TARGET_COPY_OUT_VENDOR)/etc/audio/audio_policy.conf \
+    $(LOCAL_PATH)/audio/audio_policy_configuration.xml:$(TARGET_COPY_OUT_VENDOR)/etc/audio/audio_policy_configuration.xml \
     $(LOCAL_PATH)/audio/mixer_paths.xml:$(TARGET_COPY_OUT_VENDOR)/etc/mixer_paths.xml \
     $(LOCAL_PATH)/audio/mixer_paths_auxpcm.xml:$(TARGET_COPY_OUT_VENDOR)/etc/mixer_paths_auxpcm.xml
 
@@ -59,7 +59,15 @@ PRODUCT_PACKAGES += \
     android.hardware.audio@2.0-impl \
     android.hardware.audio@2.0-service \
     android.hardware.audio.effect@2.0-impl \
-    android.hardware.audio.effect@2.0-service \
+    android.hardware.audio@4.0 \
+    android.hardware.audio@4.0-impl \
+    android.hardware.audio.common@4.0 \
+    android.hardware.audio.common@4.0-util \
+    android.hardware.audio.effect@4.0 \
+    android.hardware.audio.effect@4.0-impl \
+    android.hardware.bluetooth.a2dp@1.0 \
+    android.hardware.bluetooth.a2dp@1.0-impl \
+    android.hardware.soundtrigger@2.1-impl \
     audio.a2dp.default \
     audio_amplifier.msm8974 \
     audio_policy.msm8974 \
@@ -98,9 +106,6 @@ PRODUCT_PACKAGES += \
     android.hardware.bluetooth@1.0-service \
     libbt-vendor
 
-PRODUCT_PROPERTY_OVERRIDES += \
-    bluetooth.hfp.client=1
-
 # Boot animation
 TARGET_SCREEN_HEIGHT := 1920
 TARGET_SCREEN_WIDTH := 1080
@@ -127,11 +132,11 @@ PRODUCT_PACKAGES += \
 PRODUCT_PROPERTY_OVERRIDES += \
     dalvik.vm.checkjni=false \
     dalvik.vm.heapstartsize=12m \
-    dalvik.vm.heapgrowthlimit=288m \
-    dalvik.vm.heapsize=768m \
+    dalvik.vm.heapgrowthlimit=256m \
+    dalvik.vm.heapsize=512m \
     dalvik.vm.heaptargetutilization=0.75 \
-    dalvik.vm.heapminfree=16m \
-    dalvik.vm.heapmaxfree=32m \
+    dalvik.vm.heapminfree=2m \
+    dalvik.vm.heapmaxfree=16m \
     dalvik.vm.verify-bytecode=false \
     persist.sys.purgeable_assets=1
 
@@ -198,7 +203,7 @@ PRODUCT_PACKAGES += \
 
 # Health
 PRODUCT_PACKAGES += \
-    android.hardware.health@1.0-impl \
+    android.hardware.health@2.0-impl \
     android.hardware.health@2.0-service
 
 # HWUI
@@ -373,6 +378,10 @@ PRODUCT_PACKAGES += \
     android.hardware.usb@1.0-service.basic \
     com.android.future.usb.accessory
 
+# Vendor security patch level
+PRODUCT_PROPERTY_OVERRIDES += \
+    ro.lineage.build.vendor_security_patch=2019-01-05
+
 # Vibrator
 PRODUCT_PACKAGES += \
     android.hardware.vibrator@1.0-impl \
@@ -382,7 +391,7 @@ PRODUCT_PACKAGES += \
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/wifi/WCNSS_cfg.dat:$(TARGET_COPY_OUT_VENDOR)/firmware/wlan/prima/WCNSS_cfg.dat \
     $(LOCAL_PATH)/wifi/WCNSS_qcom_cfg.ini:$(TARGET_COPY_OUT_VENDOR)/etc/wifi/WCNSS_qcom_cfg.ini \
-    $(LOCAL_PATH)/wifi/WCNSS_qcom_wlan_nv.bin:$(TARGET_COPY_OUT_VENDOR)/firmware/wlan/prima/WCNSS_qcom_wlan_nv.bin
+    $(LOCAL_PATH)/wifi/WCNSS_qcom_wlan_nv_enhanced.bin:$(TARGET_COPY_OUT_VENDOR)/firmware/wlan/prima/WCNSS_qcom_wlan_nv.bin
 
 PRODUCT_PACKAGES += \
     android.hardware.wifi@1.0-service \

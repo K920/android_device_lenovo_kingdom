@@ -21,8 +21,13 @@
 #define BLUETOOTH_QTI_SW TRUE
 
 #define BTM_DEF_LOCAL_NAME   "Lenovo Vibe Z2 Pro"
+#define MAX_ACL_CONNECTIONS 7
+#define MAX_L2CAP_CHANNELS  16
 
-#define BLUETOOTH_QTI_SW          TRUE
-#define BT_CLEAN_TURN_ON_DISABLED TRUE
+#define BTA_SKIP_BLE_READ_REMOTE_FEAT TRUE
+#define BTA_BLE_SKIP_CONN_UPD  TRUE
+
+#define BTM_WBS_INCLUDED TRUE       /* Enable WBS */
+#define BTIF_HF_WBS_PREFERRED TRUE  /* Use WBS    */
 
 #endif

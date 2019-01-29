@@ -1,1 +1,7 @@
 type touchpanel_sysfs, fs_type, sysfs_type;
+
+# Define dpmd data file type
+# type dpmd_socket, file_type;
+# type dpmd_data_file, file_type, data_file_type, core_data_file_type;
+
+# type sysfs_io_sched_tuneable, fs_type, sysfs_type;

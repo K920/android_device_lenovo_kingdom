@@ -247,8 +247,8 @@ on post-fs-data
     setprop vold.post_fs_data_done 1
 
     # Create PERFD deamon related dirs
-    mkdir /data/system/perfd 0770 root system
-    chmod 2770 /data/system/perfd
+    mkdir /data/misc/perfd 2755 root system
+    mkdir /data/system/perfd 2770 root system
 
     # Camera sockets
     mkdir /data/misc/camera 0770 camera camera
@@ -328,10 +328,6 @@ service qcamerasvr /vendor/bin/mm-qcamera-daemon
     class late_start
     user camera
     group camera system inet input graphics
-
-on property:sys.boot_completed=1
-    stop cameraserver
-    start cameraserver
 
 service mpdecision /vendor/bin/mpdecision --avg_comp
     class main
