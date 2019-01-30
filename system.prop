@@ -19,7 +19,7 @@ ro.qualcomm.bluetooth.opp=true
 ro.qualcomm.bluetooth.pbap=true
 
 # Display & Graphics
-ro.sf.lcd_density=440
+ro.sf.lcd_density=480
 ro.qualcomm.cabl=0
 ro.opengles.version=196608
 persist.hwc.mdpcomp.enable=true
