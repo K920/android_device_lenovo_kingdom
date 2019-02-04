@@ -116,7 +116,7 @@ on boot
 
     # Assign TCP buffer thresholds to be ceiling value of technology maximums
     # Increased technology maximums should be reflected here.
-    write /proc/sys/net/core/rmem_max  8388608
+    write /proc/sys/net/core/rmem_max  16777216
     write /proc/sys/net/core/wmem_max  8388608
 
     # To allow interfaces to get v6 address when tethering is enabled
@@ -384,7 +384,7 @@ service ppd /vendor/bin/mm-pp-daemon
 service ril-daemon1 /vendor/bin/hw/rild -c 2
     class main
     user radio
-    group radio cache inet misc audio log readproc wakelock sdcard_r sdcard_rw diag
+    group radio cache inet misc audio log readproc wakelock sdcard_r
     capabilities BLOCK_SUSPEND NET_ADMIN NET_RAW
 
 service fuse_usbdisk /system/bin/sdcard -u 1023 -g 1023 -w 1023 -d /mnt/media_rw/usbdisk /storage/usbdisk
