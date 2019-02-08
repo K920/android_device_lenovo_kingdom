@@ -25,9 +25,6 @@ on early-init
     chown system system /sys/kernel/debug/kgsl/proc
 
 on init
-    # Support legacy paths
-    symlink /sdcard /storage/sdcard0
-
     start program_bdaddr
 
     export LD_PRELOAD /system/lib/libboringssl-compat.so
@@ -148,7 +145,7 @@ on boot
     write /proc/sys/kernel/printk "6 6 1 7"
 
     # KeyDisabler
-    chown root system /sys/class/touchscreen/device/0dbutton
+    chown system system /sys/class/touchscreen/device/0dbutton
     chmod 0660 /sys/class/touchscreen/device/0dbutton
 
 
@@ -214,13 +211,6 @@ on post-fs-data
     mkdir /data/connectivity 0771 system system
     chown system system /data/connectivity
 
-    # Create the directories used by DPM subsystem
-    mkdir /data/dpm 0771 system system
-    chown system system /data/dpm
-
-    mkdir /data/dpm/nsrm 0771 system system
-    chown system system /data/dpm/nsrm
-
     # Create directory used by the DASH client
     mkdir /data/misc/dash 0770 media audio
 
@@ -247,8 +237,10 @@ on post-fs-data
     setprop vold.post_fs_data_done 1
 
     # Create PERFD deamon related dirs
-    mkdir /data/misc/perfd 2755 root system
-    mkdir /data/system/perfd 2770 root system
+    mkdir /data/misc/perfd 0755 root system
+    chmod 2755 /data/misc/perfd
+    mkdir /data/system/perfd 0770 root system
+    chmod 2770 /data/system/perfd
 
     # Camera sockets
     mkdir /data/misc/camera 0770 camera camera
@@ -377,17 +369,10 @@ service wcnss-service /vendor/bin/wcnss_service
     group system wifi oem_2950 radio
     oneshot
 
-service ppd /vendor/bin/mm-pp-daemon
-    class late_start
-    disabled
-    user system
-    socket pps stream 0660 system system
-    group system graphics
-
 service ril-daemon1 /vendor/bin/hw/rild -c 2
     class main
     user radio
-    group radio cache inet misc audio log readproc wakelock sdcard_r
+    group radio cache inet misc audio log readproc wakelock
     capabilities BLOCK_SUSPEND NET_ADMIN NET_RAW
 
 service fuse_usbdisk /system/bin/sdcard -u 1023 -g 1023 -w 1023 -d /mnt/media_rw/usbdisk /storage/usbdisk
