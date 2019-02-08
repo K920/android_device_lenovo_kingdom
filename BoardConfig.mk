@@ -20,6 +20,10 @@ DEVICE_PATH := device/lenovo/kingdom
 # Assert compatibility
 TARGET_OTA_ASSERT_DEVICE := kingdom,kingdom_row,kingdomt
 
+
+# Include path
+TARGET_SPECIFIC_HEADER_PATH := $(DEVICE_PATH)/include
+
 # Bootloader
 TARGET_BOOTLOADER_BOARD_NAME := MSM8974
 TARGET_NO_BOOTLOADER := true
