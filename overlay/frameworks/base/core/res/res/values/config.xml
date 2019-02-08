@@ -267,9 +267,6 @@
     <!-- Enable Doze and App Standby -->
     <bool name="config_enableAutoPowerModes">true</bool>
 
-    <!-- Whether device supports double tap to wake -->
-    <bool name="config_supportDoubleTapWake">true</bool>
-
     <!-- Screen brightness used to dim the screen while dozing in a very low power state.
          May be less than the minimum allowed brightness setting
          that can be set by the user. -->
