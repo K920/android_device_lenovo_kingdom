@@ -380,7 +380,8 @@ PRODUCT_COPY_FILES += \
 
 # USB
 PRODUCT_PACKAGES += \
-    android.hardware.usb@1.0-service.basic
+    android.hardware.usb@1.0-service.basic \
+    com.android.future.usb.accessory
 
 # Vendor security patch level
 PRODUCT_PROPERTY_OVERRIDES += \
