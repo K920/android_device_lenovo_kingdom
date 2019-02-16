@@ -198,8 +198,7 @@ PRODUCT_PACKAGES += \
     gralloc.msm8974 \
     hwcomposer.msm8974 \
     memtrack.msm8974 \
-    liboverlay \
-    libboringssl-compat
+    liboverlay
 
 # Health
 PRODUCT_PACKAGES += \
@@ -291,10 +290,6 @@ PRODUCT_PACKAGES += \
     com.android.nfc_extras \
     NfcNci \
     Tag
-
-# Perf
-PRODUCT_PACKAGES += \
-    libshims_atomic
 
 # Permissions
 PRODUCT_COPY_FILES += \

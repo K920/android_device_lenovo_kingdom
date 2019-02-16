@@ -81,12 +81,6 @@ USE_CUSTOM_AUDIO_POLICY := 1
 # Binder
 TARGET_USES_64_BIT_BINDER := true
 
-# Bionic
-TARGET_LD_SHIM_LIBS := \
-    /vendor/bin/mpdecision|libshims_atomic.so \
-    /vendor/lib/libqomx_jpegenc.so|libboringssl-compat.so \
-    /vendor/lib/libmmqjpeg_codec.so|libboringssl-compat.so
-
 # Bluetooth
 BOARD_HAVE_BLUETOOTH := true
 BOARD_HAVE_BLUETOOTH_QCOM := true
