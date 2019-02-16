@@ -78,9 +78,6 @@ BOARD_USES_ALSA_AUDIO := true
 USE_XML_AUDIO_POLICY_CONF := 1
 USE_CUSTOM_AUDIO_POLICY := 1
 
-# Binder
-TARGET_USES_64_BIT_BINDER := true
-
 # Bluetooth
 BOARD_HAVE_BLUETOOTH := true
 BOARD_HAVE_BLUETOOTH_QCOM := true
@@ -174,7 +171,6 @@ OVERRIDE_RS_DRIVER := libRSDriver_adreno.so
 HAVE_ADRENO_SOURCE := false
 NUM_FRAMEBUFFER_SURFACE_BUFFERS := 2
 TARGET_USE_COMPAT_GRALLOC_PERFORM := true
-TARGET_NEEDS_PLATFORM_TEXT_RELOCATIONS := true
 
 # Shader cache config options
 # Maximum size of the  GLES Shaders that can be cached for reuse.
