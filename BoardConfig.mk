@@ -20,7 +20,6 @@ DEVICE_PATH := device/lenovo/kingdom
 # Assert compatibility
 TARGET_OTA_ASSERT_DEVICE := kingdom,kingdom_row,kingdomt
 
-
 # Include path
 TARGET_SPECIFIC_HEADER_PATH := $(DEVICE_PATH)/include
 
@@ -46,15 +45,13 @@ ARCH_ARM_HAVE_TLS_REGISTER := true
 BOARD_KERNEL_BASE := 0x00000000
 BOARD_KERNEL_IMAGE_NAME := zImage
 BOARD_KERNEL_PAGESIZE := 2048
-BOARD_KERNEL_CMDLINE := console=tty60,115200,n8 androidboot.hardware=qcom \
-                        user_debug=31 msm_rtb.filter=0x3b7 androidboot.bootdevice=msm_sdcc.1 \
+BOARD_KERNEL_CMDLINE := androidboot.hardware=qcom \
+			androidboot.bootdevice=msm_sdcc.1 \
 			ehci-hcd.park=3 \
-			vmalloc=480M \
-			pm.sleep_mode=1 \
 			androidboot.selinux=permissive
 
 BOARD_KERNEL_SEPARATED_DT := true
-BOARD_MKBOOTIMG_ARGS := --ramdisk_offset 0x01000000 --tags_offset 0x00000100
+BOARD_MKBOOTIMG_ARGS := --ramdisk_offset 0x02000000 --tags_offset 0x01e00000
 BOARD_DTBTOOL_ARGS := -2
 TARGET_KERNEL_ARCH := arm
 TARGET_KERNEL_SOURCE := kernel/cyanogen/msm8974
@@ -165,22 +162,21 @@ TARGET_PROVIDES_GPS_LOC_API := true
 
 # Graphics
 TARGET_CONTINUOUS_SPLASH_ENABLED := true
+VSYNC_EVENT_PHASE_OFFSET_NS := true
 TARGET_USES_ION := true
 TARGET_ADDITIONAL_GRALLOC_10_USAGE_BITS := 0x02000000U
 OVERRIDE_RS_DRIVER := libRSDriver_adreno.so
-HAVE_ADRENO_SOURCE := false
-NUM_FRAMEBUFFER_SURFACE_BUFFERS := 3
 TARGET_USE_COMPAT_GRALLOC_PERFORM := true
 
 # Shader cache config options
 # Maximum size of the  GLES Shaders that can be cached for reuse.
 # Increase the size if shaders of size greater than 12KB are used.
-MAX_EGL_CACHE_KEY_SIZE := 24*2048
+MAX_EGL_CACHE_KEY_SIZE := 12*1024
 
 # Maximum GLES shader cache size for each app to store the compiled shader
 # binaries. Decrease the size if RAM or Flash Storage size is a limitation
 # of the device.
-MAX_EGL_CACHE_SIZE := 4096*2048
+MAX_EGL_CACHE_SIZE := 2048*1024
 
 # HIDL
 DEVICE_MANIFEST_FILE := $(DEVICE_PATH)/manifest.xml
