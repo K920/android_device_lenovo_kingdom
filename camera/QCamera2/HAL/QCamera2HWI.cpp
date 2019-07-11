@@ -411,14 +411,46 @@ int QCamera2HardwareInterface::store_meta_data_in_buffers(
 int QCamera2HardwareInterface::start_recording(struct camera_device *device)
 {
     int ret = NO_ERROR;
+    int width, height;
     QCamera2HardwareInterface *hw =
         reinterpret_cast<QCamera2HardwareInterface *>(device->priv);
     if (!hw) {
         ALOGE("NULL camera device");
         return BAD_VALUE;
     }
+    // Preview window changes for 720p and higher
+    hw->mParameters.getVideoSize(&width, &height);
+    if ((width * height) >= (1280 * 720)) {
+        char *orig_params = hw->getParameters();
+        if (orig_params) {
+            android::CameraParameters params;
+            params.unflatten(android::String8(orig_params));
+            hw->putParameters(orig_params);
+
+            // Set preview size to video size
+            char video_dim[10];
+            snprintf(video_dim, sizeof(video_dim), "%dx%d", width, height);
+            params.set("preview-size", video_dim);
+
+            const char *hfrStr = params.get("video-hfr");
+            const char *hsrStr = params.get("video-hsr");
+
+            // Use yuv420sp for high framerates
+            if ((hfrStr != NULL && strcmp(hfrStr, "off")) ||
+                (hsrStr != NULL && strcmp(hsrStr, "off")))
+                params.set("preview-format", "yuv420sp");
+            else
+                params.set("preview-format", "nv12-venus");
+
+            hw->set_parameters(device, params.flatten().string());
+            // Restart preview to propagate changes to preview window
+            hw->stop_preview(device);
+            hw->start_preview(device);
+        }
+    }
     ALOGE("[KPI Perf] %s: E PROFILE_START_RECORDING", __func__);
     hw->lockAPI();
+    qcamera_api_result_t apiResult;
     ret = hw->processAPI(QCAMERA_SM_EVT_START_RECORDING, NULL);
     if (ret == NO_ERROR) {
         hw->waitAPIResult(QCAMERA_SM_EVT_START_RECORDING);
@@ -736,6 +768,14 @@ char* QCamera2HardwareInterface::get_parameters(struct camera_device *device)
     int32_t rc = hw->processAPI(QCAMERA_SM_EVT_GET_PARAMS, NULL);
     if (rc == NO_ERROR) {
         hw->waitAPIResult(QCAMERA_SM_EVT_GET_PARAMS);
+
+        android::CameraParameters params;
+        params.unflatten(android::String8(hw->m_apiResult.params));
+        // Hide nv12-venus from userspace to prevent framework crash
+        const char *fmt = params.get("preview-format");
+        if (fmt && !strcmp(fmt, "nv12-venus")) {
+            params.set("preview-format", "yuv420sp");
+            }
         ret = hw->m_apiResult.params;
     }
     hw->unlockAPI();
@@ -1063,9 +1103,9 @@ int QCamera2HardwareInterface::openCamera(struct hw_device_t **hw_device)
     rc = openCamera();
     if (rc == NO_ERROR){
         *hw_device = &mCameraDevice.common;
-        if (m_thermalAdapter.init(this) != 0) {
-          ALOGE("Init thermal adapter failed");
-        }
+//       if (m_thermalAdapter.init(this) != 0) {
+//         ALOGE("Init thermal adapter failed");
+//       }
     }
     else
         *hw_device = NULL;
@@ -1197,7 +1237,7 @@ int QCamera2HardwareInterface::closeCamera()
     m_postprocessor.stop();
     m_postprocessor.deinit();
 
-    m_thermalAdapter.deinit();
+//  m_thermalAdapter.deinit();
 
     // delete all channels if not already deleted
     for (i = 0; i < QCAMERA_CH_TYPE_MAX; i++) {

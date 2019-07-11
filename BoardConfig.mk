@@ -20,6 +20,7 @@ DEVICE_PATH := device/lenovo/kingdom
 # Assert compatibility
 TARGET_OTA_ASSERT_DEVICE := kingdom,kingdom_row,kingdomt
 
+
 # Include path
 TARGET_SPECIFIC_HEADER_PATH := $(DEVICE_PATH)/include
 
@@ -46,12 +47,14 @@ BOARD_KERNEL_BASE := 0x00000000
 BOARD_KERNEL_IMAGE_NAME := zImage
 BOARD_KERNEL_PAGESIZE := 2048
 BOARD_KERNEL_CMDLINE := androidboot.hardware=qcom \
-			androidboot.bootdevice=msm_sdcc.1 \
+                        androidboot.bootdevice=msm_sdcc.1 \
 			ehci-hcd.park=3 \
+			pm.sleep.mode=2 \
+			vmalloc=480M \
 			androidboot.selinux=permissive
 
 BOARD_KERNEL_SEPARATED_DT := true
-BOARD_MKBOOTIMG_ARGS := --ramdisk_offset 0x02000000 --tags_offset 0x01e00000
+BOARD_MKBOOTIMG_ARGS := --ramdisk_offset 0x01000000 --tags_offset 0x00000100
 BOARD_DTBTOOL_ARGS := -2
 TARGET_KERNEL_ARCH := arm
 TARGET_KERNEL_SOURCE := kernel/cyanogen/msm8974
@@ -104,6 +107,9 @@ RED_LED_PATH := "/sys/class/leds/led:rgb_red/brightness"
 GREEN_LED_PATH := "/sys/class/leds/led:rgb_green/brightness"
 BLUE_LED_PATH := "/sys/class/leds/led:rgb_blue/brightness"
 BLINK_PATH := "/sys/class/leds/led:rgb_red/blink"
+
+# Exclude serif fonts for saving system.img size
+EXCLUDE_SERIF_FONTS := true
 
 # Display
 TARGET_MSM8974_1440P_EGL_WORKAROUND := true
@@ -166,7 +172,8 @@ VSYNC_EVENT_PHASE_OFFSET_NS := true
 TARGET_USES_ION := true
 TARGET_ADDITIONAL_GRALLOC_10_USAGE_BITS := 0x02000000U
 OVERRIDE_RS_DRIVER := libRSDriver_adreno.so
-TARGET_USE_COMPAT_GRALLOC_PERFORM := true
+HAVE_ADRENO_SOURCE := false
+TARGET_NEEDS_PLATFORM_TEXT_RELOCATIONS := true
 
 # Shader cache config options
 # Maximum size of the  GLES Shaders that can be cached for reuse.
@@ -256,7 +263,8 @@ BOARD_HOSTAPD_PRIVATE_LIB        := lib_driver_cmd_qcwcn
 PRODUCT_VENDOR_MOVE_ENABLED      := true
 WIFI_DRIVER_FW_PATH_STA          := "sta"
 WIFI_DRIVER_FW_PATH_AP           := "ap"
-TARGET_USES_QCOM_WCNSS_QMI       := true
 TARGET_USES_WCNSS_MAC_ADDR_REV   := true
+TARGET_DISABLE_WCNSS_CONFIG_COPY := true
+TARGET_USES_QCOM_WCNSS_QMI       := true
 
 -include vendor/lenovo/kingdom/BoardConfigVendor.mk
