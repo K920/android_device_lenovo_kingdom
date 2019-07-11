@@ -3992,8 +3992,8 @@ int32_t QCameraParameters::initDefaultParameters()
     set(KEY_QC_RAW_PICUTRE_SIZE, raw_size_str);
 
     //set default jpeg quality and thumbnail quality
-    set(KEY_JPEG_QUALITY, 85);
-    set(KEY_JPEG_THUMBNAIL_QUALITY, 85);
+    set(KEY_JPEG_QUALITY, 92);
+    set(KEY_JPEG_THUMBNAIL_QUALITY, 92);
 
     // Set FPS ranges
     if (m_pCapability->fps_ranges_tbl_cnt > 0 &&
@@ -4125,7 +4125,7 @@ int32_t QCameraParameters::initDefaultParameters()
             ANTIBANDING_MODES_MAP,
             sizeof(ANTIBANDING_MODES_MAP) / sizeof(QCameraMap));
     set(KEY_SUPPORTED_ANTIBANDING, antibandingValues);
-    setAntibanding(ANTIBANDING_OFF);
+    setAntibanding(ANTIBANDING_AUTO);
 
     // Set Effect
     String8 effectValues = createValuesString(
@@ -4310,6 +4310,9 @@ int32_t QCameraParameters::initDefaultParameters()
     String8 onOffValues = createValuesStringFromMap(
         ON_OFF_MODES_MAP, sizeof(ON_OFF_MODES_MAP) / sizeof(QCameraMap));
 
+    // Enable tintless
+    set(KEY_QC_TINTLESS_ENABLE, VALUE_ENABLE);
+
     //Set Scene Detection
     set(KEY_QC_SUPPORTED_SCENE_DETECT, onOffValues);
     setSceneDetect(VALUE_OFF);
@@ -4420,6 +4423,7 @@ int32_t QCameraParameters::init(cam_capability_t *capabilities,
 {
     int32_t rc = NO_ERROR;
 
+    capabilities->sharpness_ctrl.def_value = 0;
     m_pCapability = capabilities;
     m_pCamOpsTbl = mmOps;
     m_AdjustFPS = adjustFPS;
@@ -5844,7 +5848,7 @@ int QCameraParameters::getAutoFlickerMode()
       Currently setting it to default    */
     char prop[PROPERTY_VALUE_MAX];
     memset(prop, 0, sizeof(prop));
-    property_get("persist.camera.set.afd", prop, "3");
+    property_get("persist.camera.set.afd", prop, "4");
     return atoi(prop);
 }
 

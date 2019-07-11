@@ -1,11 +1,8 @@
-Copyright 2017 - The LineageOS Project
-
-Device configuration for Lenovo Vibe Z2 Pro
-===========================================
+Device tree for Lenovo Vibe Z2 Pro
+===================================
 
 Basic   | Specification List
 -------:|:-------------------------
- | ![Lenovo Vibe Z2 Pro](http://cdn2.gsmarena.com/vv/bigpic/lenovo-vibe-z2-pro-r1.jpg "Lenovo Vibe Z2 Pro")
 CPU     | Quad-core 2.5 GHz Krait 400
 Chipset | Qualcomm MSM8974AC Snapdragon 801
 GPU     | Adreno 330
